@@ -4,9 +4,7 @@
 
 <head>
     <base href="" />
-    <title>PMS ERP</title>
-
-
+    <title>DIPL ERP</title>
     <meta charset="utf-8" />
     <meta name="description"
         content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
@@ -20,7 +18,11 @@
     <meta property="og:url" content="https://keenthemes.com/metronic" />
     <meta property="og:site_name" content="Keenthemes | Metronic" />
     <link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+
+
     <link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+
+    <!-- <link rel="shortcut icon" href="assets/media/avatars/sfms.PNG" style="width:40px;"/> -->
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
@@ -96,6 +98,8 @@
                     <!--begin::Header wrapper-->
                     <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1"
                         id="kt_app_header_wrapper">
+
+                        
                         <!--begin::Menu wrapper-->
                         <div class="app-header-menu app-header-mobile-drawer align-items-stretch" data-kt-drawer="true"
                             data-kt-drawer-name="app-header-menu" data-kt-drawer-activate="{default: true, lg: false}"
@@ -107,16 +111,12 @@
                             <div class="menu menu-rounded menu-column menu-lg-row my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0"
                                 id="kt_app_header_menu" data-kt-menu="true">
                                 <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                                <div data-kt-menu-trigger="{default: 'click', lg: 'hoverss'}"
                                     data-kt-menu-placement="bottom-start"
-                                    class="menu-item here show menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
-                                    <!--begin:Menu link-->
-                                    <!--<span class="menu-link">
-											<span class="menu-title">Home</span>
-											 <span class="menu-arrow d-lg-none"></span>
-										</span>-->
-                                    <!--end:Menu link-->
-                                    <!--begin:Menu sub-->
+                                    class="menu-item here show menu-here-bg menu-lg-down-accordion me-0 mess-lg-2">
+                                    <div style="text-align:center; ">
+                <h5>Project Management System</h5>
+            </div>
                                     <div
                                         class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown p-0 w-100 w-lg-850px">
                                         <!--begin:Dashboards menu-->
@@ -5124,8 +5124,10 @@
                                 <div class="cursor-pointer symbol symbol-30px symbol-md-40px"
                                     data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                                     data-kt-menu-placement="bottom-end">
-                                    <span class="badge badge-success" style="margin-right:10px;">Active</span><img
-                                        alt="Logo" src="{{url('assets/media/avatars/blank.png')}}" />
+                                    <span  style="margin-right:10px;"></span><img
+                                        alt="Logo" src="{{url('assets/media/avatars/Avatare-m-1.jpg')}}" />
+
+                                      
                                 </div>
                                 <!--begin::User account menu-->
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
@@ -5135,7 +5137,8 @@
                                         <div class="menu-content d-flex align-items-center px-3">
                                             <!--begin::Avatar-->
                                             <div class="symbol symbol-50px me-5">
-                                                <img alt="Logo" src="{{url('assets/media/avatars/blank.png')}}" />
+                                            <img
+                                        alt="Logo" src="{{url('assets/media/avatars/Avatare-m-1.jpg')}}" />
                                             </div>
                                             <!--end::Avatar-->
                                             <!--begin::Username-->
@@ -5157,18 +5160,18 @@
                                     <div class="separator my-2"></div>
                                     <!--end::Menu separator-->
                                     <!--begin::Menu item-->
-                                    <div class="menu-item px-5">
+                                    <!-- <div class="menu-item px-5">
                                         <a href="../../demo1/dist/account/overview.html"
                                             class="menu-link px-5">Profile</a>
-                                    </div>
+                                    </div> -->
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
-                                    <div class="menu-item px-5">
+                                    <!-- <div class="menu-item px-5">
                                         <a href="../../demo1/dist/apps/projects/list.html" class="menu-link px-5">
                                             <span class="menu-text">ACL</span>
 
                                         </a>
-                                    </div>
+                                    </div> -->
                                     <!--end::Menu item-->
                                     <!--begin::Menu item-->
                                     <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}"

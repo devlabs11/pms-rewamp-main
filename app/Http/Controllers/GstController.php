@@ -58,8 +58,8 @@ class GstController extends Controller
                         $editUrl = route('edit-tax-master', ['id' => $encryptedId]);
                         $deleteUrl = route('delete-tax-master', ['id' => $row->id]);
                        
-                     $actionBtn = '<a href="' . $editUrl . '" title="Edit" class="menu-link flex-stack px-3" style="font-weight:normal !important;"><i class="fa fa-edit" id="ths" style="font-weight:normal !important;"></i></a>
-                     <a  href="' . $deleteUrl . '" title="Delete"   style="cursor: pointer;font-weight:normal !important;" class="menu-link flex-stack px-3"><i class="fa fa-trash" style="color:red"></i></a>';
+                     $actionBtn = '<a href="' . $editUrl . '" title="Edit" class="menu-link flex-stack px-3" style="font-weight:normal !important;"><i class="fa fa-edit" id="ths" style="font-weight:normal !important; color:lightblue"></i></a>
+                     <a  href="' . $deleteUrl . '" title="Delete"   style="cursor: pointer;font-weight:normal !important;" class="menu-link flex-stack px-3"><i class="bi bi-trash" style="color:red"></i></a>';
                      return $actionBtn;
                     })
                     ->rawColumns(['action'])
@@ -132,62 +132,6 @@ class GstController extends Controller
         return redirect('tax-master-show');
     }
     
-    public function TrashGst()
-    {
-        DB::beginTransaction();
-        try {
-            $TrashGst = GstModel::onlyTrashed()->get();
-            DB::commit();
-        } catch (Exception $exception) {
-            DB::rollback();
-            return back()->withError($exception->getMessage())->withInput();
-        }
-        return view('admin.tax-master.tax-master-trash', ['TrashGst' => $TrashGst]);
-    }
-
-    public function restoreGst($id)
-    {
-        DB::beginTransaction();
-
-        try {
-            $restoreTrash = GstModel::withTrashed()->find($id);
-
-            if (!is_null($restoreTrash)) {
-                $restoreTrash->restore();
-               DB::commit();
-            }
-        } catch (Exception $exception) {
-            DB::rollback();
-
-            return back()->withError($exception->getMessage())->withInput();
-        }
-        Session::flash('message', ' Gst Restored Successfully.!'); 
-        return redirect('tax-master-show');
-    }
-
-    public function permanentDeleteGst($id)
-    {
-        DB::beginTransaction();
-
-        try {
-            $forcedeleteGst = GstModel::withTrashed()->find($id);
-
-            if (!is_null($forcedeleteGst)) {
-
-                $forcedeleteGst->forceDelete();
-                DB::commit();
-            }
-        } catch (Exception $exception) {
-            DB::rollback();
-
-            return back()->withError($exception->getMessage())->withInput();
-        }
-        Session::flash('message', ' Gst Deleted Successfully.!'); 
-        return redirect('tax-master-show');
-    }
-
-
-
     public function export() 
     {
         return Excel::download(new gstExport, 'gst.xlsx');

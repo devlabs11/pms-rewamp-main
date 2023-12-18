@@ -1,27 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-
+                <div class="card-header">{{ __('Sign In to PMS ERP') }}</div>
+                
+                <link rel="stylesheet"
+                    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
+                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
                         <div class="row mb-3">
                             <label for="email"
-                                class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                                class="col-md-4 col-form-label text-md-end">{{ __('Username') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
+                                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror"
+                                    name="username" value="{{ old('username') }}" required autocomplete="off" autofocus  >
+                                    <span id="emailError" style="color:red;font-size: 12px;"></span>
+                                @error('username')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
+                                    <span>{{ $message }}</span>
                                 </span>
                                 @enderror
                             </div>
@@ -35,27 +41,16 @@
                                 <input id="password" type="password"
                                     class="form-control @error('password') is-invalid @enderror" name="password"
                                     required autocomplete="current-password">
-
+                                    <span id="passwordError" style="color:red;font-size: 12px;"></span>
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
+                                    <span>{{ $message }}</span>
                                 </span>
                                 @enderror
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember"
-                                        {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                     
 
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
@@ -63,11 +58,7 @@
                                     {{ __('Login') }}
                                 </button>
 
-                                @if (Route::has('password.request'))
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
-                                @endif
+                              
                             </div>
                         </div>
                     </form>
@@ -76,4 +67,46 @@
         </div>
     </div>
 </div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var form = $('form');
+        form.validate({
+            rules: {
+                username: {
+                    required: true
+                },
+               
+                password: {
+                    required: true
+                },
+                
+            },
+            messages: {
+                username: {
+                    required: 'Username is required.'
+                },
+                password: {
+                    required: 'Password is required.'
+                },
+               
+            },
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+
+                error.appendTo(element.next('span'));
+            },
+            submitHandler: function (form) {
+                
+                form.submit();
+            }
+        });
+
+    });
+      
+</script>
 @endsection

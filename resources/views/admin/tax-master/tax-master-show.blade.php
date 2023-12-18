@@ -1,4 +1,5 @@
 @extends('admin.common.main')
+
 @section('containes')
 
 <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
@@ -7,27 +8,26 @@
 </div>
 </div>
 </div>
-
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
-<link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
 <main class="py-4">
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <div class="toolbar" id="kt_toolbar">
+            
             <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
                 <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                     <span style="display:none" class="h-20px border-gray-300 border-start mx-4"></span>
                 </div>
+                
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
                     <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
                         <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
                             data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                             class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-
+                            <!-- <h5 style="margin-right:120px;"><strong>LIST OF GST</strong></h5> -->
                             <span style="display:none" class="h-20px border-gray-300 border-start mx-4"></span>
                             <ul style="display:none" class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
                                 <li class="breadcrumb-item text-muted">
@@ -43,18 +43,23 @@
                                 <li class="breadcrumb-item text-dark">Customer Listing</li>
                             </ul>
                         </div>
+                       
                         <div class="d-flex align-items-center gap-2 gap-lg-3">
-
+                       
                             <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+                               
                                 <div>
+                             
+                               <span>
+                                    <a href="{{route('tax-master-create')}}" class="btn btn-primary btn-sm"
+                                        role="button">Add Gst</a>
 
-                                <a class="btn btn-warning float-end" href="{{ route('gst.export') }}">Export</a>
+                                        <a href="{{route('gst.export')}}" class="btn btn-info btn-sm"
 
-
-                                    <a href="{{route('tax-master-create')}}" class="btn btn-outline-info"
-                                        role="button">Add GST</a>
-                                    <a href="{{route('trash-tax-master')}}" class="btn btn-outline-danger">Trash</a>
+                                        role="button">Export</a>
+                                        </span>
                                 </div>
+                               
                                 <br>
                             </div>
 
@@ -81,10 +86,12 @@
             <br>
             <div id="kt_content_container" class="container-xxl">
                 <div class="card">
-                    <div class="card-header border-0 pt-6">
+                    <div class="card-header border-2 pt-6">
                         <div class="card-title">
                             <div class="d-flex align-items-center position-relative my-1">
                                 &nbsp;
+
+                                Gst List
 
                             </div>
                         </div>
@@ -93,16 +100,14 @@
                         <table class="table align-middle table-row-dashed fs-7 gy-5" id="tableYajra">
                             <thead>
                                 <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                    <th id="th">Id</th>
+                                <th id="th">SR NO</th>
                                     <th id="th">SGST</th>
                                     <th id="th">CGST</th>
                                     <th id="th">IGST</th>
                                     <th id="th">Actions</th>
                                 </tr>
                             </thead>
-
                             <tbody>
-
                             </tbody>
                         </table>
                     </div>
@@ -114,14 +119,8 @@
     </div>
 
     <body>
-        <style>
-        #th:hover {
-            color: #202020;
-        }
-        </style>
-
-
-        <script>
+        
+          <script>
         $(document).ready(function() {
             var table = $('#tableYajra').DataTable({
                 processing: true,
@@ -151,6 +150,9 @@
 
                     }
                 ],
+                order: [
+                  [0, 'desc'] 
+                 ],
                 rowCallback: function(row, data, index) {
                     var api = this.api();
                     var startIndex = api.page() * api.page.len();

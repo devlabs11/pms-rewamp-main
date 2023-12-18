@@ -11,19 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gst_master', function (Blueprint $table) {
-            $table->id();
-            $table->float('sgst');
-            $table->float('cgst');
-            $table->float('igst');
-            $table->integer('created_by');
-            $table->timestamp('created_date')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->integer('modify_by');
-            $table->timestamp('modify_at')->nullable();
-            $table->integer('deleted_by')->nullable();
-            $table->timestamp('deleted_at')->nullable();
-            $table->timestamps();
-        });
+        // Schema::create('gst_master', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->float('sgst');
+        //     $table->float('cgst');
+        //     $table->float('igst');
+        //     $table->integer('created_by');
+        //     $table->timestamp('created_date')->default(DB::raw('CURRENT_TIMESTAMP'));
+        //     $table->integer('modify_by');
+        //     $table->timestamp('modify_at')->nullable();
+        //     $table->integer('deleted_by')->nullable();
+        //     $table->timestamp('deleted_at')->nullable();
+        //     $table->timestamps();
+        // });
     }
 
   

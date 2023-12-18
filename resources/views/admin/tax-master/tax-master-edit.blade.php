@@ -1,12 +1,18 @@
 @extends('admin.common.main')
+
 @section('containes')
+
 
 <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 </div>
 </div>
 </div>
 </div>
+
 </div>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
+
 <main class="py-4">
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 
@@ -23,6 +29,7 @@
 
                         <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
 
+
                         </div>
 
                         <a style="display:none" href="../../demo1/dist/.html" class="btn btn-sm btn-primary"
@@ -32,8 +39,8 @@
 
                 <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
 
-
                 </div>
+
 
                 <a style="display:none" href="../../demo1/dist/.html" class="btn btn-sm btn-primary"
                     data-bs-toggle="modal" data-bs-target="#kt_modal_create_app">Create</a>
@@ -43,15 +50,16 @@
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <div id="kt_content_container" class="container-xxl">
             <div class="card">
-                <div class="card-header border-0 pt-6">
+                <div class="card-header border-2 pt-6">
                     <div class="card-title">
                         <div class="d-flex align-items-center position-relative my-1">
                             &nbsp;
-
+                            Edit Gst
                         </div>
                     </div>
                 </div>
-                <div class="card-body pt-0">
+                <div class="card-body pt-8">
+
                     <div class="col-xl-12">
                         <div class="card card-flush h-lg-100" id="kt_contacts_main">
 
@@ -59,12 +67,12 @@
 
                                 <div style="display:none" class="card-title">
 
-
+                                   
                                 </div>
                             </div>
 
                             <div class="card-body pt-5">
-                                <form action="/update-tax-master/{{$editGst->id}}" method="post">
+                                <form action="/update-tax-master/{{$editGst->id}}" method="post" id="form">
 
                                     @csrf
 
@@ -72,11 +80,12 @@
                                         <div class="col">
                                             <div class="fv-row mb-2">
                                                 <label class="fs-6 fw-bold form-label mt-3">
-                                                    <span class="">SGST</span>
+                                                    <span class="">SGST</span><span style="color:red;">*</span>
                                                 </label>
                                                 <input type="text" name="sgst" id="sgst"
                                                     class="form-control form-control-solid" autocomplete="off"
                                                     oninput="removeBorderStyle(this)" value={{ $editGst->sgst}}>
+                                                    <span id="sgstError" style="color:red;"></span>
                                                 @error('sgst')
                                                 <div id="Errormsg">{{ $message }}</div>
                                                 @enderror
@@ -86,11 +95,12 @@
                                         <div class="col">
                                             <div class="fv-row mb-2">
                                                 <label class="fs-6 fw-bold form-label mt-3">
-                                                    <span class="">CGST</span>
+                                                    <span class="">CGST</span><span style="color:red;">*</span>
                                                 </label>
                                                 <input type="text" name="cgst" id="cgst"
                                                     class="form-control form-control-solid" autocomplete="off"
                                                     oninput="removeBorderStyle(this)" value={{ $editGst->cgst}}>
+                                                    <span id="cgstError" style="color:red;"></span>
                                                 @error('cgst')
                                                 <div id="Errormsg">{{ $message }}</div>
                                                 @enderror
@@ -99,11 +109,12 @@
                                         <div class="col">
                                             <div class="fv-row mb-2">
                                                 <label class="fs-6 fw-bold form-label mt-3">
-                                                    <span class="">IGST</span>
+                                                    <span class="">IGST</span><span style="color:red;">*</span>
                                                 </label>
                                                 <input type="text" name="igst" id="igst"
                                                     class="form-control form-control-solid" autocomplete="off"
                                                     oninput="removeBorderStyle(this)" value={{ $editGst->igst}}>
+                                                    <span id="igstError" style="color:red;"></span>
                                                 @error('igst')
                                                 <div id="Errormsg">{{ $message }}</div>
                                                 @enderror
@@ -113,49 +124,109 @@
                                     </div>
                                     <br>
                                     <div style="float:right;">
-                                        <button type="reset" onclick="history.back()" id="cancel_btn"
-                                            data-kt-contacts-type="cancel" class="btn btn-outline-danger"
-                                            style="margin-right:10px;">Cancel</button>
 
-                                        <span><button type="submit" id="submit" class="btn btn-primary">Update</button>
-                                        </span>
+                                        <div class="d-flex justify-content-end">
+
+                                        <a href="{{route('tax-master-show')}}"  class="btn btn-outline-danger btn-sm"  style="margin-right:10px;">Cancel</a> 
+                                            <button type="submit" id="submit" data-kt-contacts-type="submit"
+                                                class="btn btn-primary btn-sm">
+                                                <span class="indicator-label">Save</span>
+
+                                            </button>
+                                        </div>
 
                                     </div>
                                 </form>
                             </div>
-                            <style>
-                            #sgst-error {
-                                color: red;
-                                padding-top: 15px;
-
-                            }
-                            #Errormsg {
-                                color: red;
-                                margin-top: 10px;
-                            }
-                            </style>
-
-                            <script>
-                            function removeBorderStyle(element) {
-                                if (element.value.trim() !== '') {
-                                    element.style.border = 'none';
-                                    element.style.padding = '13px';
-                                } else {
-
-                                    element.style.border = '1px solid black';
-                                    element.style.padding = '13px';
-                                }
-                            }
-                            </script>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     </div>
     </div>
     </div>
     </div>
     </div>
+
+
+    <style>
+    #sgst-error {
+        color: red;
+        padding-top: 15px;
+
+    }
+
+    #Errormsg {
+        color: red;
+        margin-top: 10px;
+
+    }
+    </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var form = document.getElementById('form');
+        var sgstInput = document.getElementById('sgst');
+        var cgstInput = document.getElementById('cgst');
+        var igstInput = document.getElementById('igst');
+
+        var sgstError = document.getElementById('sgstError');
+        var cgstError = document.getElementById('cgstError');
+        var igstError = document.getElementById('igstError');
+
+        form.addEventListener('submit', function (event) {
+            if (!isValidNumeric(sgstInput.value.trim())) {
+                sgstError.textContent = 'SGST must be a valid numeric value.';
+                event.preventDefault();
+            } else {
+                sgstError.textContent = '';
+            }
+
+            if (!isValidNumeric(cgstInput.value.trim())) {
+                cgstError.textContent = 'CGST must be a valid numeric value.';
+                event.preventDefault();
+            } else {
+                cgstError.textContent = '';
+            }
+
+            if (!isValidNumeric(igstInput.value.trim())) {
+                igstError.textContent = 'IGST must be a valid numeric value.';
+                event.preventDefault();
+            } else {
+                igstError.textContent = '';
+            }
+        });
+
+        // Add input event listeners to clear errors when the user types
+        sgstInput.addEventListener('input', function () {
+            sgstError.textContent = '';
+        });
+
+        cgstInput.addEventListener('input', function () {
+            cgstError.textContent = '';
+        });
+
+        igstInput.addEventListener('input', function () {
+            igstError.textContent = '';
+        });
+
+        function isValidNumeric(value) {
+            return /^-?\d*\.?\d+$/.test(value);
+        }
+    });
+
+    function removeBorderStyle(element) {
+        if (element.value.trim() !== '') {
+            element.style.border = 'none';
+            element.style.padding = '13px';
+        } else {
+            element.style.border = '1px solid black';
+            element.style.padding = '13px';
+        }
+    }
+</script>
+
     @endsection
