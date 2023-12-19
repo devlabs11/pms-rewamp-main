@@ -1,19 +1,13 @@
-
-
 <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
     <div id="kt_app_sidebar" class="app-sidebar flex-column" data-kt-drawer="true" data-kt-drawer-name="app-sidebar"
         data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px"
         data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_sidebar_mobile_toggle">
         <div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
-        <!-- <a>
+            <!-- <a>
                 <img alt="Logo" src="{{url('assets/media/avatars/PMS.jpg')}}" class="h-50px"
                     style="padding-left:40px;" />
             </a> -->
-        <h5 style="color:white; text-align:right; margin-right:20px;"><strong>PMS ERP</strong></h5>
-
-
-
-
+            <h5 style="color:white; text-align:right; margin-right:20px;"><strong>PMS ERP</strong></h5>
             <div id="kt_app_sidebar_toggle"
                 class="app-sidebar-toggle btn btn-icon btn-shadow btn-sm btn-color-muted btn-active-color-primary body-bg h-30px w-30px position-absolute top-50 start-100 translate-middle rotate"
                 data-kt-toggle="true" data-kt-toggle-state="active" data-kt-toggle-target="body"
@@ -32,12 +26,90 @@
                 data-kt-scroll-save-state="true">
                 <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu"
                     data-kt-menu="true" data-kt-menu-expand="false">
-                   
-                    <div data-kt-menu-trigger="click"
-                        class="menu-item">
+
+                    <!--start new-->
+
+
+                    @php ($urlname=strtolower(trans(request()->segment(1))))
+                    @foreach(App\Models\Menu::orderBy('position','asc')->get() as $menuItem)
+                    @php ($mnames = [])
+                    @php ($mnames[] = strtolower(trans(ltrim($menuItem->url,'\\'))))
+
+                    @if( $menuItem->parent_id == 0 )
+                    @php ($names = [])
+                    @foreach($menuItem->children as $subMenuItemC)
+                    @php ($names[] = strtolower(trans(ltrim($subMenuItemC->url,'\\'))))
+                    @endforeach
+
+                    @if( ! $menuItem->children->isEmpty() )
+                    <div data-kt-menu-trigger="click" @if( $menuItem->url == '' )
+                        @if(in_array($urlname, $names))
+                        class="menu-item hover show"
+                        @else
+                        class="menu-item hover"
+                        @endif
+                        @else
+                        class="menu-item"
+                        @endif
+                        >
+                        @else
+                        <div class="menu-item">
+                            @endif
+                            <span class="menu-link">
+                                <span class="menu-icon pr-3">
+                                    <i class="{{ $menuItem->icon }}">
+
+                                    </i>
+                                </span>
+                                @if( $menuItem->url != '' )
+                                <span class="menu-title"><a href="{{ $menuItem->url}}">{{ $menuItem->title }}</a></span>
+                                @else
+                                <span class="menu-title">{{ $menuItem->title }}</span>
+                                @endif
+                                @if( ! $menuItem->children->isEmpty() )
+                                <span class="menu-arrow"></span>
+                                @endif
+                            </span>
+                            @if( ! $menuItem->children->isEmpty() )
+                            @foreach($menuItem->children as $subMenuItem)
+                            @php ($snames = [])
+                            @php ($snames[] = strtolower(trans(ltrim($subMenuItem->url,'\\'))))
+                            <div class="menu-sub menu-sub-accordion">
+                                <div class="menu-item">
+                                    <a class="menu-link" href="{{ $subMenuItem->url }}">
+                                        <span class="menu-bullet">
+                                            <span class="bullet bullet-dot"></span>
+                                        </span>
+
+                                        <span class="menu-title">{{ $subMenuItem->title }}</span>
+                                    </a>
+
+                                </div>
+                            </div>
+                            @endforeach
+
+                            @endif
+                        </div>
+                        @endif
+
+
+
+
+                        @endforeach
+
+
+
+
+
+
+                        <!--end new-->
+
+
+                        <!--start old-->
+                        <!--<div data-kt-menu-trigger="click" class="menu-item">
                         <span class="menu-link">
                             <span class="menu-icon pr-3">
-                                <i class="ki-duotone ki-element-11 fs-2 text-info">
+                                <i class="ki-duotone ki-element-11 fs-2 text-primary">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                     <span class="path3"></span>
@@ -65,17 +137,17 @@
                         <div class="menu-sub menu-sub-accordion">
                             <div class="menu-item">
                                 <a class="menu-link"
-                                    href="">
+                                    href="/menu-list/0">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
                                    
-                                    <span class="menu-title">Tax Structure Master</span>
+                                    <span class="menu-title">Menu</span>
                                 </a>
 
                             </div>
                            
                             
                         </div>
-                    </div>
-                 
+                    </div>-->
+                        <!--end old-->

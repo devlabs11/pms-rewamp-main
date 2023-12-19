@@ -25,7 +25,12 @@ class Menu extends Model
     public function children()
     {
         return $this->hasMany('App\Models\Menu', 'parent_id')->orderBy('position');
-    }    
+    }  
+    
+    public function submenus()
+{
+    return $this->hasMany(Menu::class, 'parent_id', 'id');
+}
     
     protected $hidden = [
         'updated_at','parent_id','treecode'

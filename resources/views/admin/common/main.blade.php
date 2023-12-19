@@ -4,4 +4,6 @@
 <body>
     @yield('containes')
 </body>
+
+
 @include('admin.common.footer')

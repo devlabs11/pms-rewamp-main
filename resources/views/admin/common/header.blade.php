@@ -5150,7 +5150,7 @@
                                                         class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2"></span>
                                                 </div>
                                                 <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">
-                                                    {{ Auth::user()->email }}</a>
+                                                   <small> {{ Auth::user()->email }}</small></a>
                                             </div>
                                             <!--end::Username-->
                                         </div>

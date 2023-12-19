@@ -86,7 +86,7 @@
                                                     autocomplete="off" style="border: 1px solid black; padding: 13px;"
                                                     oninput="removeBorderStyle(this)">
 
-                                                    <span id="sgstError" style="color:red;"></span>
+                                                <span id="sgstError" style="color:red;"></span>
 
                                                 @error('sgst')
                                                 <div id="Errormsg">{{ $message }}</div>
@@ -103,7 +103,7 @@
                                                     class="form-control form-control-solid" value="{{old('cgst')}}"
                                                     autocomplete="off" style="border: 1px solid black; padding: 13px;"
                                                     oninput="removeBorderStyle(this)">
-                                                    <span id="cgstError" style="color:red;"></span>
+                                                <span id="cgstError" style="color:red;"></span>
                                                 @error('cgst')
                                                 <div id="Errormsg">{{ $message }}</div>
                                                 @enderror
@@ -121,7 +121,7 @@
                                                     aria-invalid="true" value="{{old('igst')}}" autocomplete="off"
                                                     style="border: 1px solid black; padding: 13px;"
                                                     oninput="removeBorderStyle(this)">
-                                                    <span id="igstError" style="color:red;"></span>
+                                                <span id="igstError" style="color:red;"></span>
                                                 @error('igst')
                                                 <div id="Errormsg">{{ $message }}</div>
                                                 @enderror
@@ -136,7 +136,8 @@
 
                                         <div class="d-flex justify-content-end">
 
-                                        <a href="{{route('tax-master-show')}}"  class="btn btn-outline-danger btn-sm"  style="margin-right:10px;">Cancel</a> 
+                                            <a href="{{route('tax-master-show')}}" class="btn btn-outline-danger btn-sm"
+                                                style="margin-right:10px;">Cancel</a>
                                             <button type="submit" id="submit" data-kt-contacts-type="submit"
                                                 class="btn btn-primary btn-sm">
                                                 <span class="indicator-label">Save</span>
@@ -177,9 +178,9 @@
     </style>
 
 
-    
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
         var form = document.getElementById('form');
         var sgstInput = document.getElementById('sgst');
         var cgstInput = document.getElementById('cgst');
@@ -189,7 +190,7 @@
         var cgstError = document.getElementById('cgstError');
         var igstError = document.getElementById('igstError');
 
-        form.addEventListener('submit', function (event) {
+        form.addEventListener('submit', function(event) {
             if (!isValidNumeric(sgstInput.value.trim())) {
                 sgstError.textContent = 'SGST must be a valid numeric value.';
                 event.preventDefault();
@@ -213,15 +214,15 @@
         });
 
         // Add input event listeners to clear errors when the user types
-        sgstInput.addEventListener('input', function () {
+        sgstInput.addEventListener('input', function() {
             sgstError.textContent = '';
         });
 
-        cgstInput.addEventListener('input', function () {
+        cgstInput.addEventListener('input', function() {
             cgstError.textContent = '';
         });
 
-        igstInput.addEventListener('input', function () {
+        igstInput.addEventListener('input', function() {
             igstError.textContent = '';
         });
 
@@ -239,7 +240,7 @@
             element.style.padding = '13px';
         }
     }
-</script>
+    </script>
 
 
     @endsection

@@ -20,7 +20,7 @@ class MenuController extends Controller
         $this->module_name="Menu";
     }        
     
-    public function index(Request $request)
+	public function index(Request $request)
     {
 		$input = $request->all();
 		$parent_id=$input['parent_id'];        
@@ -29,8 +29,9 @@ class MenuController extends Controller
             'id', 'title', 'url', 'icon', 'parent_id'
             ])
             ->where('parent_id', $parent_id);	        
-            $datatable = DataTables::of($data)
+            $datatable = Datatables::of($data)
                 ->addColumn('action', function($row){
+                    //$btn = '<a href="'. route("Menus.edit", $row->id) .'" class="edit btn btn-success btn-sm">Edit</a>';
                     $btn = '<a href="javascript:void(0);" class="edit-record btn btn-sm btn-success" id="'.$row->id.'" role="dialog" aria-labelledby="myModalLabel" 
                     data-id="'.$row->id.'" data-title="'.$row->title.'"  data-url="'.$row->url.'" data-icon="'.$row->icon.'">
                     <i class="glyphicon glyphicon-edit"></i> Edit</a>';
@@ -55,7 +56,7 @@ class MenuController extends Controller
                 }) 
                 ->rawColumns(['title','action','action_del']);                
                 return $datatable->make(true);              
-      
+        
     }
 
     public function menuData()
@@ -79,7 +80,7 @@ class MenuController extends Controller
 		
         $module_name=$this->module_name;
 		return view('admin.menu.index',compact(['id','module_name','breadcrumb']));
-    }    
+    }  
 
 	public function orderData()
     {

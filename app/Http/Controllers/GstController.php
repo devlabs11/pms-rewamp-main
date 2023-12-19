@@ -56,7 +56,7 @@ class GstController extends Controller
                     ->addColumn('action', function($row) {
                         $encryptedId = encrypt($row->id);
                         $editUrl = route('edit-tax-master', ['id' => $encryptedId]);
-                        $deleteUrl = route('delete-tax-master', ['id' => $row->id]);
+                        $deleteUrl = route('delete-tax-master', ['id' =>$encryptedId]);
                        
                      $actionBtn = '<a href="' . $editUrl . '" title="Edit" class="menu-link flex-stack px-3" style="font-weight:normal !important;"><i class="fa fa-edit" id="ths" style="font-weight:normal !important; color:lightblue"></i></a>
                      <a  href="' . $deleteUrl . '" title="Delete"   style="cursor: pointer;font-weight:normal !important;" class="menu-link flex-stack px-3"><i class="bi bi-trash" style="color:red"></i></a>';
@@ -117,7 +117,7 @@ class GstController extends Controller
         DB::beginTransaction();
         try {
             $userId = auth()->id();
-            $deleteGst = GstModel::find($id);
+            $deleteGst = GstModel::find(decrypt($id));
 
             if (!is_null($deleteGst)) {
                 $deleteGst::where('id', $deleteGst->id)->update(['deleted_by' => $userId]);
