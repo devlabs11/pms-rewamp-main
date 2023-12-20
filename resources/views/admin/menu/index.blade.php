@@ -199,6 +199,7 @@
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary" id="btnEdit">Edit</button>
+                            @csrf
                         </div>
                         @if(!empty($id))
                         <input type="hidden" name="parent_id" class="form-control" value="{{ $id }}" />
