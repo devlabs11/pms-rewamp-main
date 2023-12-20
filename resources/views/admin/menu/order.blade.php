@@ -132,15 +132,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body pt-0">
-                        <table class="table align-middle table-row-dashed fs-7 gy-5" id="prospect-master">
+                    <div class="card-body pt-0"> 
+                        <table class="table align-middle table-row-dashed fs-7 gy-5 tbl_repeat" id="prospect-master">
                             <thead>
                                 <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                                     <th>Position</th>
                                     <th>Title</th>
                                 </tr>
                             </thead>
-                            <tbody class="fw-bold text-gray-600"  tbody id="sortable">
+                            <tbody class="fw-bold text-gray-600"  id="sortable">
 
                                 @foreach($cols as $info)
 
@@ -171,49 +171,43 @@
     color: #202020;
 }
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/TableDnD/0.9.1/jquery.tablednd.js"
-    integrity="sha256-d3rtug+Hg1GZPB7Y/yTcRixO/wlI78+2m08tosoRn7A=" crossorigin="anonymous"></script>
-<script src="{{ asset('js/jquery.tablednd_0_5.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/jquery.tablednd/0.5/jquery.tablednd.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/TableDnD/0.9.1/jquery.tablednd.js" integrity="sha256-d3rtug+Hg1GZPB7Y/yTcRixO/wlI78+2m08tosoRn7A=" crossorigin="anonymous"></script>
 <script>
-$(function() {
-    $(".tbl_repeat tbody").tableDnD({
-        onDrop: function(table, row) {
-            var list = new Array();
-            $('#sortable').find('.ui-state-default').each(function() {
-                var id = $(this).attr('data-id');
-                list.push(id);
-            });
-            console.log(list);
-            var data = JSON.stringify(list);
-            var orders = $.tableDnD.serialize();
-            $.ajax({
-                dataType: 'json',
-                type: 'POST',
-                url: '{{ URL::to('menu-sortable') }}',
-                data: {
-                    orders: data,
-                    _token: "{{ csrf_token() }}",
-                    pid: {
-                        {
-                            $parent_id
-                        }
-                    }
-                },
-                datatype: 'json',
-            });
-        }
+    
+    jQuery(document).ready(function($) {
+        
+        $(".tbl_repeat tbody").tableDnD({ 
+            onDrop: function(table, row) {
+                var list = new Array();
+                $('#sortable').find('.ui-state-default').each(function() {
+                    var id = $(this).attr('data-id');
+                    
+                    list.push(id);
+                });
+                console.log(list);
+                var data = JSON.stringify(list);
+                $.ajax({
+				dataType: 'json',
+				type:'POST',
+				url: '{{ URL::to('menu-sortable') }}',
+				data:{ orders : data,
+                    _token: '{{ csrf_token() }}',
+                     pid : {{ $parent_id }} },
+				datatype: 'json',
+			});	
+            }
+        });
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
     });
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-});
 </script>
+
 
 @endsection

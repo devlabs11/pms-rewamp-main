@@ -42,19 +42,20 @@
                     @endforeach
 
                     @if( ! $menuItem->children->isEmpty() )
-                    <div data-kt-menu-trigger="click" @if( $menuItem->url == '' )
-                        @if(in_array($urlname, $names))
-                        class="menu-item hover show"
-                        @else
-                        class="menu-item hover"
-                        @endif
-                        @else
-                        class="menu-item"
-                        @endif
-                        >
-                        @else
-                        <div class="menu-item">
+                    <div data-kt-menu-trigger="click" 
+                        
+                            @if(in_array($urlname, $names))
+                                class="menu-item hover show"
+                            @else
+                                class="menu-item hover"
                             @endif
+                        
+                        
+                        >
+                    @else
+                        <div class="menu-item">
+                    @endif 
+                            
                             <span class="menu-link">
                                 <span class="menu-icon pr-3">
                                     <i class="{{ $menuItem->icon }}"  style="font-size: 2em;">
@@ -74,7 +75,14 @@
                             @foreach($menuItem->children as $subMenuItem)
                             @php ($snames = [])
                             @php ($snames[] = strtolower(trans(ltrim($subMenuItem->url,'\\'))))
-                            <div class="menu-sub menu-sub-accordion">
+                            <div class="menu-sub menu-sub-accordion"
+                            
+                                @if(in_array($urlname, $snames))
+                                    style=""
+                                @endif
+                            
+                                                     
+                            >
                                 <div class="menu-item">
                                     <a class="menu-link" href="{{ $subMenuItem->url }}">
                                         <span class="menu-bullet">
