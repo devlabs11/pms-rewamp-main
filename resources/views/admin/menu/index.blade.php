@@ -72,7 +72,7 @@
 
 
         <div class="col-lg-12 margin-tb">
-            <div class="float-left">
+            <div class="float-right">
 
                 <button type="button" class="btn btn-primary btn-sm" id="add-record" data-toggle="modal"
                     data-target="#create-item">Add Record</button>
@@ -308,6 +308,8 @@
                 });
             });
 
+            
+
             $("#btnEdit").click(function(e) {
                 e.preventDefault();
                 var form_action = "upload";
@@ -349,6 +351,7 @@
             });
         });
         </script>
+      
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

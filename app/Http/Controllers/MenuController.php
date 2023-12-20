@@ -28,7 +28,9 @@ class MenuController extends Controller
             $data = Menu::select([            
             'id', 'title', 'url', 'icon', 'parent_id'
             ])
-            ->where('parent_id', $parent_id);	        
+            ->where('parent_id', $parent_id);
+			
+
             $datatable = Datatables::of($data)
                 ->addColumn('action', function($row){
                     //$btn = '<a href="'. route("Menus.edit", $row->id) .'" class="edit btn btn-success btn-sm">Edit</a>';
@@ -82,6 +84,8 @@ class MenuController extends Controller
 		return view('admin.menu.index',compact(['id','module_name','breadcrumb']));
     }  
 
+	
+
 	public function orderData()
     {
 		$parent_id = \Request::segment(2); 
@@ -104,6 +108,7 @@ class MenuController extends Controller
 		$cols = DB::select('select id,title,position from menus where parent_id = :id order by position', ['id' => $parent_id]);
 		return view('admin.menu.order',compact(['cols','module_name','parent_id','breadcrumb']));
 	}
+    
     
 	public function sortData(Request $request)
     {
@@ -147,4 +152,19 @@ class MenuController extends Controller
 		DB::update('update menus set title = ?, url= ?, icon=?, updated_at=? where id = ?',[$input['title'],$input['url'],$input['icon'],$updated_at,$input['id']]);
 		return response()->json(['done']);
     }    
+
+
+
+
+public function destroy($id)
+{
+    $menu = Menu::findOrFail($id);
+    
+	DB::table('menus')->whereRaw("treecode REGEXP '[[:<:]]{$id}[[:>:]]'")->delete();
+   
+    session()->flash('success', 'Menu deleted successfully');
+    return back();
+}
+
+
 }

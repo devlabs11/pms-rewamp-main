@@ -171,12 +171,14 @@
     color: #202020;
 }
 </style>
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/TableDnD/0.9.1/jquery.tablednd.js"
+    integrity="sha256-d3rtug+Hg1GZPB7Y/yTcRixO/wlI78+2m08tosoRn7A=" crossorigin="anonymous"></script>
 <script src="{{ asset('js/jquery.tablednd_0_5.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/jquery.tablednd/0.5/jquery.tablednd.min.js"></script>
+
 <script>
 $(function() {
     $(".tbl_repeat tbody").tableDnD({
@@ -192,10 +194,10 @@ $(function() {
             $.ajax({
                 dataType: 'json',
                 type: 'POST',
-                url: '{{ URL::to('
-                menu - sortable ') }}',
+                url: '{{ URL::to('menu-sortable') }}',
                 data: {
                     orders: data,
+                    _token: "{{ csrf_token() }}",
                     pid: {
                         {
                             $parent_id
