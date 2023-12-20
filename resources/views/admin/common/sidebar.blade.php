@@ -57,7 +57,7 @@
                             @endif
                             <span class="menu-link">
                                 <span class="menu-icon pr-3">
-                                    <i class="{{ $menuItem->icon }}">
+                                    <i class="{{ $menuItem->icon }}"  style="font-size: 2em;">
 
                                     </i>
                                 </span>
