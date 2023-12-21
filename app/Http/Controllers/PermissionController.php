@@ -106,7 +106,8 @@ class PermissionController extends Controller
     public function editPermission($id, PermissionModel $pm)
     {
         $edit = PermissionModel::find(decrypt($id));
-        return view('admin.permission.updatePermission', ['edit' => $edit]);
+        $Menus = Menu::where('parent_id', 0)->get();
+        return view('admin.permission.updatePermission', ['edit' => $edit , 'Menus'=>$Menus]);
     }
 
     public function updatePermission(Request $request, $id, PermissionModel $pm)

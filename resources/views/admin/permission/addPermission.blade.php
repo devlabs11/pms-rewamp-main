@@ -123,7 +123,7 @@
                                                     class="form-control form-control-solids"
                                                     style="border: 1px solid black; padding-top:0px; padding-bottom:0px;">
 
-                                                    <option value="">select</option>
+                                                    <option value="">Select menu</option>
                                                     @foreach($Menus as $key=>$value)
 
                                                     <option value="{{$value->id}}">{{$value->title}}</option>
@@ -146,7 +146,7 @@
                                                 <select name="sub_menu_id" id="submenu_id"
                                                     class="form-control form-control-solids"
                                                     style="border: 1px solid black; padding-top:0px; padding-bottom:0px;">
-                                                    <option value="">Select</option>
+                                                    <option value="">Select submenu</option>
 
                                                 </select>
                                                 <span id="submenuError" style="color:red;"></span>
