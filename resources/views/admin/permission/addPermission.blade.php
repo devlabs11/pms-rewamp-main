@@ -43,7 +43,6 @@
 
                 </div>
 
-
                 <a style="display:none" href="../../demo1/dist/.html" class="btn btn-sm btn-primary"
                     data-bs-toggle="modal" data-bs-target="#kt_modal_create_app">Create</a>
             </div>
@@ -114,6 +113,49 @@
                                             </div>
                                         </div>
 
+                                        <div class="col">
+                                            <div class="fv-row mb-2">
+                                                <label class="fs-6 fw-bold form-label mt-3">
+                                                    <span class="">Menu</span><span style="color: red;">*</span>
+                                                </label>
+
+                                                <select name="menu_id" id="menu_id"
+                                                    class="form-control form-control-solids"
+                                                    style="border: 1px solid black; padding-top:0px; padding-bottom:0px;">
+
+                                                    <option value="">select</option>
+                                                    @foreach($Menus as $key=>$value)
+
+                                                    <option value="{{$value->id}}">{{$value->title}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span id="roleError" style="color:red;"></span>
+
+                                                @error('role_id')
+                                                <div id="Errormsg">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <div class="fv-row mb-2">
+                                                <label class="fs-6 fw-bold form-label mt-3">
+                                                    <span class="">Submenu</span><span style="color: red;">*</span>
+                                                </label>
+
+                                                <select name="sub_menu_id" id="submenu_id"
+                                                    class="form-control form-control-solids"
+                                                    style="border: 1px solid black; padding-top:0px; padding-bottom:0px;">
+                                                    <option value="">Select</option>
+
+                                                </select>
+                                                <span id="submenuError" style="color:red;"></span>
+
+                                                @error('submenu_id')
+                                                <div id="Errormsg">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
                                         <div class="col" style="display:none">
                                             <div class="fv-row mb-2">
                                                 <label class="fs-6 fw-bold form-label mt-3">
@@ -156,51 +198,108 @@
     </div>
     </div>
     <style>
-        #organisation_code-error {
-            color: red;
-            padding-top: 15px;
-        }
-        #Errormsg {
-            color: red;
-            margin-top: 10px;
-        }
+    #organisation_code-error {
+        color: red;
+        padding-top: 15px;
+    }
+
+    #Errormsg {
+        color: red;
+        margin-top: 10px;
+    }
     </style>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var form = document.getElementById('form');
-            form.addEventListener('submit', function (event) {
-                var titleInput = document.getElementById('title');
-                var nameInput = document.getElementById('organisation_name');
-                var titleError = document.getElementById('titleError');
-                var nameError = document.getElementById('nameError');
-
-                if (titleInput.value.trim() === '') {
-                    titleError.textContent = 'Title is required.';
-                    event.preventDefault();
-                } else {
-                    titleError.textContent = '';
-                }
-                if (nameInput.value.trim() === '') {
-                    nameError.textContent = 'Permission Name is required.';
-                    event.preventDefault();
-                } else {
-                    nameError.textContent = '';
-                }
-            });
+    document.addEventListener('DOMContentLoaded', function () {
+        var form = document.getElementById('form');
+        form.addEventListener('submit', function (event) {
             var titleInput = document.getElementById('title');
             var nameInput = document.getElementById('organisation_name');
+            var titleError = document.getElementById('titleError');
+            var nameError = document.getElementById('nameError');
+            var menuId = document.getElementById('menu_id');
+            var submenuId = document.getElementById('submenu_id');
+            var roleError = document.getElementById('roleError');
+            var submenuError = document.getElementById('submenuError');
 
-            titleInput.addEventListener('input', function () {
-                document.getElementById('titleError').textContent = '';
-            });
+            if (titleInput.value.trim() === '') {
+                titleError.textContent = 'Title is required.';
+                event.preventDefault();
+            } else {
+                titleError.textContent = '';
+            }
 
-            nameInput.addEventListener('input', function () {
-                document.getElementById('nameError').textContent = '';
+            if (nameInput.value.trim() === '') {
+                nameError.textContent = 'Permission Name is required.';
+                event.preventDefault();
+            } else {
+                nameError.textContent = '';
+            }
+
+            if (menuId.value === '') {
+                roleError.textContent = 'Menu is required.';
+                event.preventDefault();
+            } else {
+                roleError.textContent = '';
+            }
+        });
+
+        var titleInput = document.getElementById('title');
+        var nameInput = document.getElementById('organisation_name');
+        var menuId = document.getElementById('menu_id');
+        var submenuId = document.getElementById('submenu_id');
+
+        titleInput.addEventListener('input', function () {
+            document.getElementById('titleError').textContent = '';
+        });
+
+        nameInput.addEventListener('input', function () {
+            document.getElementById('nameError').textContent = '';
+        });
+
+        menuId.addEventListener('change', function () {
+            document.getElementById('roleError').textContent = '';
+        });
+
+        submenuId.addEventListener('change', function () {
+            document.getElementById('submenuError').textContent = '';
+        });
+    });
+
+    function removeBorderStyle(element) {
+        element.style.border = '1px solid black';
+    }
+</script>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('#menu_id').on('change', function() {
+            var menuId = $(this).val();
+            var submenuDropdown = $('#submenu_id');
+
+            $.ajax({
+                url: '/get-submenus/' + menuId,
+                type: 'GET',
+                success: function(data) {
+                    submenuDropdown.empty();
+
+                    if (data.length > 0) {
+                        $.each(data, function(index, submenu) {
+                            submenuDropdown.append('<option value="' + submenu.id +
+                                '">' + submenu.title + '</option>');
+                        });
+                    } else {
+                        
+                            submenuDropdown.append('<option value="' + menuId + '">No submenus available</option>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
             });
         });
-        function removeBorderStyle(element) {
-            element.style.border = '1px solid black';
-        }
+    });
     </script>
 
     @endsection

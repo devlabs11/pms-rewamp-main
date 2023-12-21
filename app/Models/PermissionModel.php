@@ -12,7 +12,7 @@ class PermissionModel extends Model
     use SoftDeletes;
     protected $table = "permissions";
 
-    protected $fillable = ['name','title', 'guard_name'];
+    protected $guarded=[];
 
     public function fetchPermission()
     {

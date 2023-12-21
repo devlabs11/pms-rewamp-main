@@ -66,6 +66,13 @@ Route::get('/edit-permission/{id}', [App\Http\Controllers\PermissionController::
 Route::post('/update-permission/{id}', [App\Http\Controllers\PermissionController::class, 'updatePermission'])->name('update-permission');
 Route::get('/delete-permission/{id}', [App\Http\Controllers\PermissionController::class, 'destroyPermission'])->name('delete-permission');
 
+
+// send menus to the add permissions
+Route::get('/addPermission', [App\Http\Controllers\PermissionController::class, 'sendMenu']);
+
+// getting submenus according to menus
+Route::get('/get-submenus/{menu_id}', [App\Http\Controllers\PermissionController::class, 'getSubmenus'])->name('get.submenus');
+
 });
 
 

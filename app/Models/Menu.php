@@ -9,12 +9,13 @@ class Menu extends Model
 {
     use HasFactory;
 
-  protected $table = "menus";
+    protected $table = "menus";
 
-  public $fillable = ['title','url','icon','parent_id','treecode','position','created_at'];
+    public $fillable = ['title', 'url', 'icon', 'parent_id', 'treecode', 'position', 'created_at'];
 
-    public function childs() {
-        return $this->hasMany('App\Models\Menu','parent_id','id') ;
+    public function childs()
+    {
+        return $this->hasMany('App\Models\Menu', 'parent_id', 'id');
     }
 
     public function parent()
@@ -25,14 +26,20 @@ class Menu extends Model
     public function children()
     {
         return $this->hasMany('App\Models\Menu', 'parent_id')->orderBy('position');
-    }  
-    
+    }
+
     public function submenus()
-{
-    return $this->hasMany(Menu::class, 'parent_id', 'id');
-}
+    {
+        return $this->hasMany(Menu::class, 'parent_id', 'id');
+    }
     
+
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class, 'menu_id');
+    }
+
     protected $hidden = [
-        'updated_at','parent_id','treecode'
-    ];    
+        'updated_at', 'parent_id', 'treecode'
+    ];
 }

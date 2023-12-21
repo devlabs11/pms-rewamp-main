@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\PermissionModel;
+use App\Models\Menu;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
@@ -19,20 +21,44 @@ class PermissionController extends Controller
         $this->permission_model = new PermissionModel();
     }
 
+    public function sendMenu()
+    {
+        $Menus = Menu::where('parent_id', 0)->get();
+        return view('admin.permission.addPermission', ['Menus' => $Menus]);
+    }
+
+    // get sub menus
+
+    public function getSubmenus($menuId)
+    {
+        $menu = Menu::find($menuId);
+        if (!$menu) {
+            return response()->json(['error' => 'Menu not found'], 404);
+        }
+        $submenus = $menu->submenus;
+        return response()->json($submenus);
+    }
+
     public function storePermission(Request $request, PermissionModel $pm)
     {
         $request->validate([
             'name' => 'required',
             'title' => 'required',
+            'menu_id' => 'required',
+            'sub_menu_id' => 'nullable',
         ]);
         DB::beginTransaction();
         try {
             $store = new PermissionModel;
             $store->name = $request->get('name');
             $store->title = $request->get('title');
+            $store->menu_id = $request->get('menu_id');
+            $store->sub_menu_id = $request->get('sub_menu_id');
             $store->guard_name = $request->get('guard_name');
             $store->created_by = auth()->id();
             $store->save();
+
+
         } catch (Exception $exception) {
             DB::rollback();
             return back()->withError($exception->getMessage())->withInput();
@@ -40,7 +66,7 @@ class PermissionController extends Controller
         Session::flash('message', 'Permission added successfully.');
         return redirect('showPermission');
     }
-    // fetch all permissions 
+
     public function fetchPermission(Request $request)
     {
         $permission_data = $this->permission_model->fetchPermission();
@@ -85,16 +111,17 @@ class PermissionController extends Controller
 
     public function updatePermission(Request $request, $id, PermissionModel $pm)
     {
-        
         $request->validate([
             'name' => 'required',
             'title' => 'required',
+            'menu_id' => 'required',
         ]);
         DB::beginTransaction();
         try {
             $up = PermissionModel::find(decrypt($id));
             $up->name = $request->get('name');
             $up->title = $request->get('title');
+            $up->menu_id = $request->get('menu_id');
             $up->updated_by = auth()->id();
             $up->save();
         } catch (Exception $exception) {
