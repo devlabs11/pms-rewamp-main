@@ -23,7 +23,7 @@ var hostUrl = "assets/";
 <script src="{{url('assets/js/custom/utilities/modals/create-app.js')}}"></script>
 <script src="{{url('assets/js/custom/utilities/modals/new-target.js')}}"></script>
 <script src="{{url('assets/js/custom/utilities/modals/users-search.js')}}"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> -->
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 

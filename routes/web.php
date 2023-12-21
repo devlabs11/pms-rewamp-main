@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GstController;
+use App\Models\PermissionModel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Authenticate;
 Route::get('/', function () {
@@ -46,6 +47,24 @@ Route::get('showRoles', [App\Http\Controllers\RolesController::class, 'showRole'
 Route::get('/delete-role/{id}', [App\Http\Controllers\RolesController::class, 'destroyRole'])->name('delete-role');
 Route::get('/edit-role/{id}', [App\Http\Controllers\RolesController::class, 'editRole'])->name('edit-role');
 Route::post('/update-role/{id}', [App\Http\Controllers\RolesController::class, 'updateRole'])->name('update-role');
+
+// ......................................................Permission.............................................................................//
+
+
+Route::get('/addPermission', function () {
+    return view('admin.permission.addPermission');
+})->name('add-permission');
+
+Route::get('/p', function () {
+    $permission_data = PermissionModel::all();
+    return view('admin.RolesAndPermission.partialFiles.partial', ['permission_data' => $permission_data]);
+});
+
+Route::post('/storePermission', [App\Http\Controllers\PermissionController::class, 'storePermission'])->name('add-permission');
+Route::get('/showPermission', [App\Http\Controllers\PermissionController::class, 'showPermission'])->name('show-permission');
+Route::get('/edit-permission/{id}', [App\Http\Controllers\PermissionController::class, 'editPermission'])->name('edit-permission');
+Route::post('/update-permission/{id}', [App\Http\Controllers\PermissionController::class, 'updatePermission'])->name('update-permission');
+Route::get('/delete-permission/{id}', [App\Http\Controllers\PermissionController::class, 'destroyPermission'])->name('delete-permission');
 
 });
 
