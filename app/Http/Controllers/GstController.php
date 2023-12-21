@@ -58,8 +58,8 @@ class GstController extends Controller
                         $editUrl = route('edit-tax-master', ['id' => $encryptedId]);
                         $deleteUrl = route('delete-tax-master', ['id' =>$encryptedId]);
                        
-                     $actionBtn = '<a href="' . $editUrl . '" title="Edit" class="menu-link flex-stack px-3" style="font-weight:normal !important;"><i class="fa fa-edit" id="ths" style="font-weight:normal !important; color:lightblue"></i></a>
-                     <a  href="' . $deleteUrl . '" title="Delete"   style="cursor: pointer;font-weight:normal !important;" class="menu-link flex-stack px-3"><i class="bi bi-trash" style="color:red"></i></a>';
+                     $actionBtn = '<a href="' . $editUrl . '" title="Edit" class="menu-link flex-stack px-3" style="font-weight:normal !important;"><i class="fa fa-edit" id="ths" style="font-weight:normal !important;"></i></a>
+                     <a  href="' . $deleteUrl . '" title="Delete"   style="cursor: pointer;font-weight:normal !important;" class="menu-link flex-stack px-3"><i class="fa fa-trash" style="color:red"></i></a>';
                      return $actionBtn;
                     })
                     ->rawColumns(['action'])
