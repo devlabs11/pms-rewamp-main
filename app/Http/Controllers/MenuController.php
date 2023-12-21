@@ -85,7 +85,6 @@ class MenuController extends Controller
     }  
 
 	
-
 	public function orderData()
     {
 		$parent_id = \Request::segment(2); 
