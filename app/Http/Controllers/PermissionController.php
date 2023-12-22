@@ -123,6 +123,7 @@ class PermissionController extends Controller
             $up->name = $request->get('name');
             $up->title = $request->get('title');
             $up->menu_id = $request->get('menu_id');
+            $up->sub_menu_id = $request->get('sub_menu_id');
             $up->updated_by = auth()->id();
             $up->save();
         } catch (Exception $exception) {
