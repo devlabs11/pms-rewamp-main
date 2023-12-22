@@ -11,8 +11,12 @@
 
 </div>
 <script>
-        var selectedSubmenuId = {{$edit->sub_menu_id ?? 'null'}};
-        console.log('Selected Submenu ID:', selectedSubmenuId);
+var selectedSubmenuId = {
+    {
+        $edit - > sub_menu_id ?? 'null'
+    }
+};
+console.log('Selected Submenu ID:', selectedSubmenuId);
 </script>
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
@@ -114,45 +118,48 @@
                                             </div>
                                         </div>
                                         <div class="col">
-    <div class="fv-row mb-2">
-        <label class="fs-6 fw-bold form-label mt-3">
-            <span class="">Menu</span><span style="color: red;">*</span>
-        </label>
+                                            <div class="fv-row mb-2">
+                                                <label class="fs-6 fw-bold form-label mt-3">
+                                                    <span class="">Menu</span><span style="color: red;">*</span>
+                                                </label>
 
-        <select name="menu_id" id="menu_id" class="form-control form-control-solids"
-                style="border: 1px solid black; padding-top:0px; padding-bottom:0px;">
+                                                <select name="menu_id" id="menu_id"
+                                                    class="form-control form-control-solids"
+                                                    style="border: 1px solid black; padding-top:0px; padding-bottom:0px;">
 
-            <option value="">select</option>
-            @foreach($Menus as $key=>$value)
-                <option value="{{$value->id}}" @if($value->id == $edit->menu_id) selected @endif>{{$value->title}}</option>
-            @endforeach
-        </select>
-        <span id="roleError" style="color:red;"></span>
+                                                    <option value="">select</option>
+                                                    @foreach($Menus as $key=>$value)
+                                                    <option value="{{$value->id}}" @if($value->id == $edit->menu_id)
+                                                        selected @endif>{{$value->title}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <span id="roleError" style="color:red;"></span>
 
-        @error('role_id')
-            <div id="Errormsg">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                @error('role_id')
+                                                <div id="Errormsg">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
 
-<div class="col">
-    <div class="fv-row mb-2">
-        <label class="fs-6 fw-bold form-label mt-3">
-            <span class="">Submenu</span><span style="color: red;">*</span>
-        </label>
+                                        <div class="col">
+                                            <div class="fv-row mb-2">
+                                                <label class="fs-6 fw-bold form-label mt-3">
+                                                    <span class="">Submenu</span><span style="color: red;">*</span>
+                                                </label>
 
-        <select name="sub_menu_id" id="submenu_id" class="form-control form-control-solids"
-                style="border: 1px solid black; padding-top:0px; padding-bottom:0px;">
-            <option value="">Select</option>
-            <!-- Submenu options will be dynamically added here via Ajax -->
-        </select>
-        <span id="submenuError" style="color:red;"></span>
+                                                <select name="sub_menu_id" id="submenu_id"
+                                                    class="form-control form-control-solids"
+                                                    style="border: 1px solid black; padding-top:0px; padding-bottom:0px;">
+                                                    <option value="">Select</option>
+                                                    <!-- Submenu options will be dynamically added here via Ajax -->
+                                                </select>
+                                                <span id="submenuError" style="color:red;"></span>
 
-        @error('submenu_id')
-            <div id="Errormsg">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                                @error('submenu_id')
+                                                <div id="Errormsg">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
 
                                         <div class="col" style="display:none">
                                             <div class="fv-row mb-2">
@@ -256,11 +263,23 @@
         element.style.border = '1px solid black';
     }
     </script>
- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+    var selectedSubmenuId = {
+        !!json_encode($edit - > sub_menu_id ?? null) !!
+    };
+    console.log('Selected Submenu ID:', selectedSubmenuId);
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
     $(document).ready(function() {
         $('#menu_id').on('change', function() {
             var menuId = $(this).val();
+            var selectedSubmenuId = {
+                !!json_encode($edit - > sub_menu_id ?? null) !!
+            };
+            console.log(selectedSubmenuId)
             var submenuDropdown = $('#submenu_id');
 
             $.ajax({
@@ -271,12 +290,19 @@
 
                     if (data.length > 0) {
                         $.each(data, function(index, submenu) {
-                            submenuDropdown.append('<option value="' + submenu.id +
-                                '">' + submenu.title + '</option>');
+                            var option = $('<option value="' + submenu.id + '">' +
+                                submenu.title + '</option>');
+
+
+                            if (submenu.id == selectedSubmenuId) {
+                                option.prop('selected', true);
+                            }
+
+                            submenuDropdown.append(option);
                         });
                     } else {
-                        
-                            submenuDropdown.append('<option value="' + menuId + '">No submenus available</option>');
+                        submenuDropdown.append('<option value="' + menuId +
+                            '">No submenus available</option>');
                     }
                 },
                 error: function(xhr, status, error) {
@@ -285,7 +311,6 @@
             });
         });
     });
-
-    
     </script>
+
     @endsection
