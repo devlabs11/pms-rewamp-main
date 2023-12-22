@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\GstController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RolesAndPermissionController;
 use App\Models\PermissionModel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Authenticate;
@@ -74,6 +76,13 @@ Route::get('/addPermission', [App\Http\Controllers\PermissionController::class, 
 Route::get('/get-submenus/{menu_id}', [App\Http\Controllers\PermissionController::class, 'getSubmenus'])->name('get.submenus');
 
 });
+
+
+
+Route::get('/showroles_and_permission', [RolesAndPermissionController::class, 'showRP'])->name('showroles_and_permission');
+Route::post('/showroles_and_permission', [RolesAndPermissionController::class, 'storeRolesAndPermission'])->name('showroles_and_permissions');
+
+Route::get('/fetchPermission', [PermissionController::class, 'fetchPermission'])->name('fetchPermission');
 
 
 ?>

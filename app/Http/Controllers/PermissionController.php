@@ -72,7 +72,11 @@ class PermissionController extends Controller
         $permission_data = $this->permission_model->fetchPermission();
         $role_data = Role::findById($request->role_id);
         $rolepermission = $role_data->permissions->pluck('id')->toArray();
-        $html = view('admin.RolesAndPermission.partialFiles.partial', ['permission_data' => $permission_data, 'rolepermission' => $rolepermission])->render();
+
+        // send menus in partial file
+        $Menus = Menu::with('submenus.permissions')->where('parent_id', 0)->get();
+
+        $html = view('admin.RolesAndPermission.partialFiles.partial', ['permission_data' => $permission_data, 'rolepermission' => $rolepermission , 'Menus'=>$Menus])->render();
         $response['html'] = $html;
         $response['status'] = true;
         return response(json_encode($response), 200);
@@ -152,6 +156,4 @@ class PermissionController extends Controller
         }
         return redirect('showPermission');
     }
-
-
 }

@@ -286,6 +286,7 @@
 
                     if (data.length > 0) {
                         $.each(data, function(index, submenu) {
+                            
                             submenuDropdown.append('<option value="' + submenu.id +
                                 '">' + submenu.title + '</option>');
                         });

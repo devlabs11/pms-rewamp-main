@@ -30,10 +30,14 @@ class Menu extends Model
 
     public function submenus()
     {
-        return $this->hasMany(Menu::class, 'parent_id', 'id');
+        return $this->hasMany(Menu::class, 'parent_id');
     }
-    
 
+    
+public function permissions()
+{
+    return $this->hasMany(PermissionModel::class, 'sub_menu_id');
+}
     public function menu()
     {
         return $this->belongsTo(Menu::class, 'menu_id');
