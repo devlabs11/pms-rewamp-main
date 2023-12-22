@@ -10,14 +10,7 @@
 </div>
 
 </div>
-<script>
-var selectedSubmenuId = {
-    {
-        $edit - > sub_menu_id ?? 'null'
-    }
-};
-console.log('Selected Submenu ID:', selectedSubmenuId);
-</script>
+
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
 
@@ -151,7 +144,7 @@ console.log('Selected Submenu ID:', selectedSubmenuId);
                                                     class="form-control form-control-solids"
                                                     style="border: 1px solid black; padding-top:0px; padding-bottom:0px;">
                                                     <option value="">Select</option>
-                                                    <!-- Submenu options will be dynamically added here via Ajax -->
+                                                    
                                                 </select>
                                                 <span id="submenuError" style="color:red;"></span>
 
@@ -263,54 +256,55 @@ console.log('Selected Submenu ID:', selectedSubmenuId);
         element.style.border = '1px solid black';
     }
     </script>
-    <script>
-    var selectedSubmenuId = {
-        !!json_encode($edit - > sub_menu_id ?? null) !!
-    };
-    console.log('Selected Submenu ID:', selectedSubmenuId);
-    </script>
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-    $(document).ready(function() {
-        $('#menu_id').on('change', function() {
-            var menuId = $(this).val();
-            var selectedSubmenuId = {
-                !!json_encode($edit - > sub_menu_id ?? null) !!
-            };
-            console.log(selectedSubmenuId)
-            var submenuDropdown = $('#submenu_id');
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectedSubmenuId = {!! json_encode($edit->sub_menu_id ?? null) !!};
+        console.log('Selected Submenu ID:', selectedSubmenuId);
 
-            $.ajax({
-                url: '/get-submenus/' + menuId,
-                type: 'GET',
-                success: function(data) {
-                    submenuDropdown.empty();
+        var menuId = {!! json_encode($edit->menu_id ?? null) !!};
+        $('#menu_id').val(menuId).change();
 
-                    if (data.length > 0) {
-                        $.each(data, function(index, submenu) {
-                            var option = $('<option value="' + submenu.id + '">' +
-                                submenu.title + '</option>');
-
-
-                            if (submenu.id == selectedSubmenuId) {
-                                option.prop('selected', true);
-                            }
-
-                            submenuDropdown.append(option);
-                        });
-                    } else {
-                        submenuDropdown.append('<option value="' + menuId +
-                            '">No submenus available</option>');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-            });
-        });
+        // Use AJAX to fetch submenus based on the selected menu
+        fetchSubmenus(menuId, selectedSubmenuId);
     });
-    </script>
+
+    $('#menu_id').on('change', function() {
+        var menuId = $(this).val();
+
+      
+        fetchSubmenus(menuId, null);
+    });
+
+    function fetchSubmenus(menuId, selectedSubmenuId) {
+        var submenuDropdown = $('#submenu_id');
+
+        $.ajax({
+            url: '/get-submenus/' + menuId,
+            type: 'GET',
+            success: function(data) {
+                submenuDropdown.empty();
+
+                if (data.length > 0) {
+                    $.each(data, function(index, submenu) {
+                        var option = $('<option value="' + submenu.id + '">' + submenu.title + '</option>');
+
+                        if (submenu.id == selectedSubmenuId) {
+                            option.prop('selected', true);
+                        }
+
+                        submenuDropdown.append(option);
+                    });
+                } else {
+                    submenuDropdown.append('<option value="' + selectedSubmenuId + '"></option>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+</script>
+
 
     @endsection
