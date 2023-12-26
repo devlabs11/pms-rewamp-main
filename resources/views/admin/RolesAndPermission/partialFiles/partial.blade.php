@@ -46,6 +46,9 @@
         .border-span[name="permission[]"] {
             border-radius: 10px; /* Adjust as needed */
         }
+        .main-menu .form-check-input {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -58,9 +61,9 @@
     @foreach ($Menus as $menu)
         <li class="tree-node">
             <!-- Menu Checkbox -->
-            <input type="checkbox"  id="check{{ $menu->id }}" value="{{ $menu->id }}"
+            <input type="checkbox"   id="check{{ $menu->id }}" value="{{ $menu->id }}"
                 {{ in_array($menu->id, $rolepermission) ? 'checked' : '' }} name="menu[]">
-            <label style="border:1px dashed green" for="check{{ $menu->id }}">
+            <label style="color:green" for="check{{ $menu->id }}">
                 {{ strtoupper($menu->title) }}
             </label>
 
@@ -72,7 +75,7 @@
                             <!-- Submenu Checkbox -->
                             <input type="checkbox" class="form-check-input" id="check{{ $submenu->id }}" value="{{ $submenu->id }}"
                                 {{ in_array($submenu->id, $rolepermission) ? 'checked' : '' }} name="submenu[]">
-                            <label style="border:1px dashed grey" for="check{{ $submenu->id }}">
+                            <label  for="check{{ $submenu->id }}">
                                 {{ strtoupper($submenu->title) }}
                             </label>
 
@@ -84,7 +87,7 @@
                                             <!-- Permission Checkbox -->
                                             <input type="checkbox" class="form-check-input" id="check{{ $permission->id }}" value="{{ $permission->id }}"
                                                 {{ in_array($permission->id, $rolepermission) ? 'checked' : '' }} name="permission[]">
-                                            <label class="form-check-label border-span" for="check{{ $permission->id }}">
+                                            <label style="border:1px dotted lightgrey" for="check{{ $permission->id }}">
                                                 {{ strtoupper($permission->name) }}
                                             </label>
                                         </li>
