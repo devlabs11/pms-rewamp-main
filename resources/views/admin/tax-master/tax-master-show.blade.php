@@ -1,7 +1,7 @@
 @extends('admin.common.main')
 @section('title', 'Tax Master | DIPLERP')
 @section('containes')
-@can('show-tax')
+@can('show-gst')
 <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 </div>
 </div>
@@ -51,11 +51,11 @@
                                 <div>
 
                                     <span>
-                                        @can('create-tax')
+                                        @can('add-gst')
                                         <a href="{{route('tax-master-create')}}" class="btn btn-primary btn-sm"
                                             role="button">Add Gst</a>
                                         @endcan
-                                        @can('export-tax')
+                                        @can('export-gst')
                                         <a href="{{route('gst.export')}}" class="btn btn-info btn-sm"
                                             role="button">Export</a>
                                         @endcan
@@ -176,12 +176,7 @@
                 console.log("ready!");
             });
         </script>
-
-
-
     </body>
-
     @endcan
-
     </html>
     @endsection
