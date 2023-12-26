@@ -3,6 +3,8 @@
 use App\Http\Controllers\GstController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RolesAndPermissionController;
+use App\Http\Controllers\TaxStructureMasterController;
+use App\Http\Controllers\UsersController;
 use App\Models\PermissionModel;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\Authenticate;
@@ -11,6 +13,8 @@ Route::get('/', function () {
 });
 Auth::routes();
 Route::group(['middleware' => ['auth', 'web']], function() {
+
+
 Route::get('/home',function(){
  return view('admin.common.main');
 });
@@ -77,15 +81,22 @@ Route::get('/addPermission', [App\Http\Controllers\PermissionController::class, 
 
 // getting submenus according to menus
 Route::get('/get-submenus/{menu_id}', [App\Http\Controllers\PermissionController::class, 'getSubmenus'])->name('get.submenus');
-
 });
-
-
 
 Route::get('/showroles_and_permission', [RolesAndPermissionController::class, 'showRP'])->name('showroles_and_permission');
 Route::post('/showroles_and_permission', [RolesAndPermissionController::class, 'storeRolesAndPermission'])->name('showroles_and_permissions');
 
 Route::get('/fetchPermission', [PermissionController::class, 'fetchPermission'])->name('fetchPermission');
 
+// ......................................................Tax Structure Master.............................................................................//
+Route::get('/tax-structure-master-create', function () {
+    return view('admin.tax-structure.tax-structure-master-create');
+});
 
-?>
+ Route::post('/tax-structure-master-create', [App\Http\Controllers\TaxStructureMasterController::class, 'storeTaxStructure'])->name('tax-structure-master-create');
+ Route::get('/tax-structure-master-show', [App\Http\Controllers\TaxStructureMasterController::class, 'showTaxStructure'])->name('tax-structure-master-show');
+
+Route::get('/edit-structure-tax-master/{id}' , [App\Http\Controllers\GstController::class, 'editTaxStructure'])->name('edit-structure-tax-master');
+Route::post('/update-structure-tax-master/{id}' , [App\Http\Controllers\GstController::class, 'updateTaxStructure']);
+Route::get('/delete-structure-tax-master/{id}' , [App\Http\Controllers\GstController::class, 'destroyTaxStructure'])->name('delete-structure-tax-master')->middleware('can:delete-gst');
+
