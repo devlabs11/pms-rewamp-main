@@ -100,7 +100,8 @@
                                                     style="border: 1px solid black; padding-top:0px; padding-bottom:0px;">
                                                     <option value="">select</option>
                                                     <option value="1">10</option>
-                                                    <option value="1">20</option>
+                                                    <option value="2">20</option>
+                                                    <option value="3">30</option>
                                                 </select>
                                                 <span id="taxError" style="color:red;"></span>
                                                 @error('tax')

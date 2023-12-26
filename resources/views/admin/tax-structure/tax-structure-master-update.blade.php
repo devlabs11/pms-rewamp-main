@@ -71,7 +71,8 @@
                                 </div>
                             </div>
                             <div class="card-body pt-5">
-                                <form method="POST" id="form" action="{{route('tax-structure-master-create')}}">
+                                <form method="POST" id="form"
+                                action="{{ route('update-structure-tax-master',encrypt($editTaxStructure->id)) }}">
                                     @csrf
                                     <div class="row row-cols-1 row-cols-sm-3 rol-cols-md-1 row-cols-lg-3">
                                         <div class="col-xl-6">
@@ -82,7 +83,7 @@
                                                 </label>
                                                 <input type="text" name="tax_structure_name" id="tax_structure_name"
                                                     class="form-control form-control-solid"
-                                                    value="{{old('tax_structure_name')}}" autocomplete="off"
+                                                    value="{{$editTaxStructure->tax_structure_name}}" autocomplete="off"
                                                     style="border: 1px solid black; padding: 13px;"
                                                     oninput="removeBorderStyle(this)">
                                                 <span id="taxStructureNameError" style="color:red;"></span>
@@ -97,22 +98,26 @@
                                                     <span class="">Select Tax</span><span style="color: red;">*</span>
                                                 </label>
                                                 <select name="tax" id="tax" class="form-control form-control-solid"
-                                                    style="border: 1px solid black; padding-top:0px; padding-bottom:0px;">
+                                                    style="border: 1px solid black; padding-top: 0px; padding-bottom: 0px;">
                                                     <option value="">select</option>
-                                                    <option value="1">10</option>
-                                                    <option value="1">20</option>
+                                                    <option value="1"
+                                                        {{ $editTaxStructure->tax == 1 ? 'selected' : '' }}>{{$editTaxStructure->tax}}</option>
+                                                    <option value="2"
+                                                        {{ $editTaxStructure->tax == 2 ? 'selected' : '' }}>{{$editTaxStructure->tax}}</option>
                                                 </select>
                                                 <span id="taxError" style="color:red;"></span>
                                                 @error('tax')
                                                 <div id="Errormsg">{{ $message }}</div>
                                                 @enderror
+
                                             </div>
                                         </div>
                                     </div>
                                     <br>
                                     <div style="float:right;">
                                         <div class="d-flex justify-content-end">
-                                            <a href="{{route('tax-structure-master-show')}}" class="btn btn-outline-danger btn-sm"
+                                            <a href="{{route('tax-structure-master-show')}}"
+                                                class="btn btn-outline-danger btn-sm"
                                                 style="margin-right:10px;">Cancel</a>
                                             <button type="submit" id="submit" data-kt-contacts-type="submit"
                                                 class="btn btn-primary btn-sm">

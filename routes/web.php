@@ -98,7 +98,10 @@ Route::group(['middleware' => ['auth', 'web']], function () {
     Route::post('/tax-structure-master-create', [App\Http\Controllers\TaxStructureMasterController::class, 'storeTaxStructure'])->name('tax-structure-master-create');
     Route::get('/tax-structure-master-show', [App\Http\Controllers\TaxStructureMasterController::class, 'showTaxStructure'])->name('tax-structure-master-show');
 
-    Route::get('/edit-structure-tax-master/{id}', [App\Http\Controllers\GstController::class, 'editTaxStructure'])->name('edit-structure-tax-master');
-    Route::post('/update-structure-tax-master/{id}', [App\Http\Controllers\GstController::class, 'updateTaxStructure']);
-    Route::get('/delete-structure-tax-master/{id}', [App\Http\Controllers\GstController::class, 'destroyTaxStructure'])->name('delete-structure-tax-master')->middleware('can:delete-gst');
+    Route::get('/edit-structure-tax-master/{id}', [App\Http\Controllers\TaxStructureMasterController::class, 'editTaxStructure'])->name('edit-structure-tax-master');
+    Route::post('/update-structure-tax-master/{id}', [App\Http\Controllers\TaxStructureMasterController::class, 'updateTaxStructure'])->name('update-structure-tax-master');
+    
+    Route::get('/delete-structure-tax-master/{id}', [App\Http\Controllers\TaxStructureMasterController::class, 'destroyTaxStructure'])->name('delete-structure-tax-master');
+    Route::post('/update-status', [TaxStructureMasterController::class ,'updateStatus'])->name('update-status');
+
 });

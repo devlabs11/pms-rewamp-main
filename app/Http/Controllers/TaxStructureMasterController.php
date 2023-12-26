@@ -74,20 +74,85 @@ class TaxStructureMasterController extends Controller
     }
 
     
-    public function edit(string $id)
+    public function editTaxStructure(string $id)
     {
+        try {
+            $editTaxStructure = TaxStructureModel::find(decrypt($id)); 
+        } catch (Exception $exception) {  
+            return back()->withError($exception->getMessage())->withInput();
+        }
+        return view('admin.tax-structure.tax-structure-master-update', ['editTaxStructure' => $editTaxStructure]);
         
     }
 
     
-    public function update(Request $request, string $id)
-    {
-        
+    public function updateTaxStructure(Request $request, string $id)
+{
+    $request->validate([
+        'tax_structure_name' => 'required',
+        'tax' => 'required',
+    ]);
+
+    DB::beginTransaction();
+    try {
+        $editTaxStructure = TaxStructureModel::find(decrypt($id));
+
+        if (!$editTaxStructure) {
+            throw new Exception('Tax Structure not found.');
+        }
+
+        $editTaxStructure->tax_structure_name = $request->get('tax_structure_name');
+        $editTaxStructure->tax = $request->get('tax');
+        $editTaxStructure->save();
+
+        DB::commit();
+    } catch (Exception $exception) {
+        DB::rollback();
+        return back()->withError($exception->getMessage())->withInput();
     }
 
-    
-    public function destroy(string $id)
+    Session::flash('message', 'Tax Structure Updated Successfully!');
+    return redirect('tax-structure-master-show');
+}
+
+    public function destroyTaxStructure($id)
     {
-        
+        DB::beginTransaction();
+        try {
+            $userId = auth()->id();
+            $deleteGst = TaxStructureModel::find(decrypt($id));
+
+            if (!is_null($deleteGst)) {
+                $deleteGst::where('id', $deleteGst->id)->update(['deleted_by' => $userId]);
+                $deleteGst->delete();
+             DB::commit();
+            }
+        } catch (Exception $exception) {
+            DB::rollback();
+            return back()->withError($exception->getMessage())->withInput();
+        }
+        Session::flash('message', 'Tax Structure Deleted Successfully.!'); 
+        return redirect('tax-structure-master-show');
     }
+
+
+    public function updateStatus(Request $request)
+    {
+        $id = $request->input('id');
+        $record = TaxStructureModel::find($id);
+    
+        if ($record) {
+            
+            $record->status = ($record->status === 'Inactive') ? 'Active' : 'Inactive';
+            $record->save();
+    
+            return response()->json(['status' => $record->status]);
+        }
+    
+        return response()->json(['error' => 'Record not found']);
+    }
+    
+
+
+    
 }

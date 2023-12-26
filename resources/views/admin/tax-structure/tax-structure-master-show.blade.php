@@ -78,7 +78,7 @@
                             <div class="d-flex align-items-center position-relative my-1">
                                 &nbsp;
 
-                               Tax Structure Masters List
+                                Tax Structure Masters List
 
                             </div>
                         </div>
@@ -90,7 +90,6 @@
                                     <th id="th">SR NO</th>
                                     <th id="th">UNIQUE ID</th>
                                     <th id="th">TAX STRUCTURE NAME</th>
-                                   
                                     <th id="th">STATUS</th>
                                     <th id="th">ACTIONS</th>
 
@@ -108,55 +107,68 @@
     </div>
 
     <body>
-        <style>
-        
-        </style>
-        <script>
-        $(document).ready(function() {
-            var table = $('#tableYajra').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('tax-structure-master-show') }}",
-                columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex'
-                    },
-                    {
-                        data: 'unique_id',
-                        name: 'unique_id'
-                    },
-                    {
-                        data: 'tax_structure_name',
-                        name: 'tax_structure_name'
-                    },
-                   
-                    {
-                        data: 'status',
-                        name: 'status'
-                    },
-                    
-                   
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable: true,
-                        searchable: true,
-
+    <script>
+    $(document).ready(function () {
+        var table = $('#tableYajra').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('tax-structure-master-show') }}",
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                { data: 'unique_id', name: 'unique_id' },
+                { data: 'tax_structure_name', name: 'tax_structure_name' },
+                {
+                    data: 'status',
+                    name: 'status',
+                    render: function (data, type, full, meta) {
+                        return '<button class="toggle-status btn btn-sm btn-' + (data === 'Active' ? 'success' : 'danger') +
+                            '" data-id="' + full.id + '">' +
+                            (data === 'Active' ? 'Active' : 'Inactive') +
+                            '</button>';
                     }
-                ],
-                rowCallback: function(row, data, index) {
-                    var api = this.api();
-                    var startIndex = api.page() * api.page.len();
-                    var rowNum = startIndex + index + 1;
-                    $(row).find('td:eq(0)').html(rowNum);
+                },
+                { data: 'action', name: 'action', orderable: true, searchable: true }
+            ],
+            rowCallback: function (row, data, index) {
+                var api = this.api();
+                var startIndex = api.page() * api.page.len();
+                var rowNum = startIndex + index + 1;
+                $(row).find('td:eq(0)').html(rowNum);
+            }
+        });
+
+        // Add a click event listener to toggle the status
+        $('#tableYajra').on('click', '.toggle-status', function () {
+            var id = $(this).data('id');
+            var statusCell = $(this);
+
+            $.ajax({
+                url: "{{ route('update-status') }}",
+                type: 'POST',
+                data: {
+                    id: id,
+                    _token: '{{ csrf_token() }}',
+                },
+                success: function (response) {
+                    // Update the button style and text
+                    statusCell.removeClass('btn-success btn-danger');
+                    statusCell.addClass('btn-' + (response.status === 'Active' ? 'success' : 'danger'));
+                    statusCell.text(response.status === 'Active' ? 'Active' : 'Inactive');
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
                 }
             });
-
-            setTimeout(function() {
-                $("div.alert-success").remove();
-            }, 3000);
         });
-        </script>
+
+        setTimeout(function () {
+            $("div.alert-success").remove();
+        }, 3000);
+    });
+</script>
+
+
+
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -170,5 +182,6 @@
 
 
     </body>
+
     </html>
     @endsection
