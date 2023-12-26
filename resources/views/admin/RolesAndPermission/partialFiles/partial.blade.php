@@ -1,61 +1,103 @@
-<!-- In your partial.blade.php or wherever you render the HTML -->
-<style>
-    /* Your existing styles remain unchanged */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSTree-like Permissions</title>
+   
+    <style>
+        .tree {
+            padding-left: 20px;
+            list-style: none;
+        }
 
-    .submenu-checkbox-group {
-        /* Add additional styling as needed */
-    }
+        .tree-node {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 5px;
+        }
 
-    .permission-checkbox-group {
-        /* Add additional styling as needed */
-    }
-</style>
+        .tree-node:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            border-left: 1px dashed green;
+            margin-left: -10px; /* Adjust as needed */
+        }
+
+        .border-span {
+            padding: 5px;
+            display: inline-block;
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        /* Adjusted checkbox styling */
+        .form-check-input {
+            width: 15px; /* Adjust as needed */
+            height: 15px; /* Adjust as needed */
+        }
+
+        /* Rounded border for permissions */
+        .border-span[name="permission[]"] {
+            border-radius: 10px; /* Adjust as needed */
+        }
+    </style>
+</head>
+<body>
 
 <label class="fs-6 fw-bold form-label mt-3">
-    <span class="border-span" style="margin-left:-20px;">❂ Permissions :</span>
+    <span class="border-span">❂ Permissions :</span>
 </label>
 
-<div class="custom-checkbox-group">
+<ul class="tree">
     @foreach ($Menus as $menu)
-        <div class="form-check">
+        <li class="tree-node">
             <!-- Menu Checkbox -->
-            <input type="checkbox" class="form-check-input" id="check{{ $menu->id }}" value="{{ $menu->id }}"
+            <input type="checkbox"  id="check{{ $menu->id }}" value="{{ $menu->id }}"
                 {{ in_array($menu->id, $rolepermission) ? 'checked' : '' }} name="menu[]">
-            <label class="form-check-label" for="check{{ $menu->id }}">
-                <span >{{ strtoupper($menu->title) }}</span>
+            <label style="border:1px dashed green" for="check{{ $menu->id }}">
+                {{ strtoupper($menu->title) }}
             </label>
 
             @if ($menu->submenus && count($menu->submenus) > 0)
                 <!-- Submenu Checkbox Group -->
-                <div class="submenu-checkbox-group">
+                <ul class="tree">
                     @foreach ($menu->submenus as $submenu)
-                        <div class="form-check">
+                        <li class="tree-node">
                             <!-- Submenu Checkbox -->
                             <input type="checkbox" class="form-check-input" id="check{{ $submenu->id }}" value="{{ $submenu->id }}"
                                 {{ in_array($submenu->id, $rolepermission) ? 'checked' : '' }} name="submenu[]">
-                            <label class="form-check-label" for="check{{ $submenu->id }}">
-                                <span >{{ strtoupper($submenu->title) }}</span>
+                            <label style="border:1px dashed grey" for="check{{ $submenu->id }}">
+                                {{ strtoupper($submenu->title) }}
                             </label>
 
                             @if ($submenu->permissions && count($submenu->permissions) > 0)
-                             
-                                <div class="permission-checkbox-group">
+                                <!-- Permission Checkbox Group -->
+                                <ul class="tree">
                                     @foreach ($submenu->permissions as $permission)
-                                        <div class="form-check">
+                                        <li class="tree-node">
                                             <!-- Permission Checkbox -->
                                             <input type="checkbox" class="form-check-input" id="check{{ $permission->id }}" value="{{ $permission->id }}"
                                                 {{ in_array($permission->id, $rolepermission) ? 'checked' : '' }} name="permission[]">
-                                            <label class="form-check-label" for="check{{ $permission->id }}">
-                                                <span style="border: 1px dashed lightgrey; padding: 5px;">{{ strtoupper($permission->name) }}</span>
+                                            <label class="form-check-label border-span" for="check{{ $permission->id }}">
+                                                {{ strtoupper($permission->name) }}
                                             </label>
-                                        </div>
+                                        </li>
                                     @endforeach
-                                </div>
+                                </ul>
                             @endif
-                        </div>
+                        </li>
                     @endforeach
-                </div>
+                </ul>
             @endif
-        </div>
+        </li>
     @endforeach
-</div>
+</ul>
+
+</body>
+</html>

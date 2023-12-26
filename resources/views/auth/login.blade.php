@@ -26,6 +26,8 @@
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="http://erp-test.devharshinfotech.com/assets/plugins/global/plugins.bundle.css" rel="stylesheet"
         type="text/css" />
+
+
     <link href="http://erp-test.devharshinfotech.com/assets/css/style.bundle.css " rel="stylesheet" type="text/css" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -65,15 +67,12 @@
                                 <img alt="Logo"
                                     src="http://erp-test.devharshinfotech.com/assets/media/logos/logo-2.jpg "
                                     class="h-60px" style="margin-bottom:30px" />
+                                    
 
                                 <!--end::Logo-->
                                 <!--begin::Title-->
                                 <h1 class="text-dark mb-3">Sign In to PMS ERP</h1>
-                                <!--end::Title-->
-                                <!--begin::Link-->
-                                <!-- <div class="text-gray-400 fw-bold fs-4">New Here?
-									<a href="../../demo1/dist/authentication/layouts/aside/sign-up.html" class="link-primary fw-bolder">Create an Account</a></div> -->
-                                <!--end::Link-->
+                               
                             </div>
 
                             <div class="alert alert-danger alert-block" id="err_msg" style="display:none">
@@ -219,15 +218,12 @@
     var hostUrl = "assets/";
     </script>
     <!--begin::Global Javascript Bundle(used by all pages)-->
-    <script src="http://erp-test.devharshinfotech.com/assets/plugins/global/plugins.bundle.js "></script>
-    <script src="http://erp-test.devharshinfotech.com/assets/js/scripts.bundle.js "></script>
+    <!-- <script src="{{url('assets/plugins/global/plugins.bundle.js')}} "></script> -->
+    <!-- <script src="{{url('assets/js/scripts.bundle.js')}}"></script> -->
     <!--end::Global Javascript Bundle-->
     <!--begin::Page Custom Javascript(used by this page)-->
-    <script src="http://erp-test.devharshinfotech.com/assets/js/custom/authentication/sign-in/general.js "></script>
-    <!--end::Page Custom Javascript-->
-    <script src="http://erp-test.devharshinfotech.com/assets/js/jquery.validate.min.js "></script>
-
-
+    <!-- <script src="{{url('assets/js/custom/authentication/sign-in/general.js')}}"></script> -->
+    
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
