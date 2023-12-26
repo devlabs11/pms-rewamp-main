@@ -130,6 +130,7 @@
 
                     }
                 ],
+            
                 rowCallback: function(row, data, index) {
                     var api = this.api();
                     var startIndex = api.page() * api.page.len();
