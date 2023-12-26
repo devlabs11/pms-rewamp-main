@@ -1,9 +1,12 @@
 @extends('admin.common.main')
+@section('title', 'Roles | DIPLERP')
 @section('containes')
+
 <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 </div>
 </div>
 </div>
+
 </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>

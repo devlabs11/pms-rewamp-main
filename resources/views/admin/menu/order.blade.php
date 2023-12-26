@@ -1,4 +1,5 @@
 @extends('admin.common.main')
+@section('title', 'Menu Listing | DIPLERP')
 @section('containes')
 
 

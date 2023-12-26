@@ -1,5 +1,5 @@
 @extends('admin.common.main')
-
+@section('title', 'Tax Master | DIPLERP')
 @section('containes')
 
 

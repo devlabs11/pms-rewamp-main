@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Traits\HasRoles;
 
+
 class RolesModel extends Model
 {
     use HasFactory;
@@ -15,4 +16,7 @@ class RolesModel extends Model
 
     protected  $table = "roles";
     protected $guarded = [];
+
+
+
 }

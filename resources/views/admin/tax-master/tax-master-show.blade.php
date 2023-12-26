@@ -1,7 +1,7 @@
 @extends('admin.common.main')
-
+@section('title', 'Tax Master | DIPLERP')
 @section('containes')
-
+@can('show-tax')
 <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 </div>
 </div>
@@ -14,14 +14,14 @@
 <main class="py-4">
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
         <div class="toolbar" id="kt_toolbar">
-            
+
             <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
                 <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
                     data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}"
                     class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
                     <span style="display:none" class="h-20px border-gray-300 border-start mx-4"></span>
                 </div>
-                
+
                 <div class="d-flex align-items-center gap-2 gap-lg-3">
                     <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
                         <div data-kt-swapper="true" data-kt-swapper-mode="prepend"
@@ -43,23 +43,25 @@
                                 <li class="breadcrumb-item text-dark">Customer Listing</li>
                             </ul>
                         </div>
-                       
+
                         <div class="d-flex align-items-center gap-2 gap-lg-3">
-                       
+
                             <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
-                               
+
                                 <div>
-                             
-                               <span>
-                                    <a href="{{route('tax-master-create')}}" class="btn btn-primary btn-sm"
-                                        role="button">Add Gst</a>
 
+                                    <span>
+                                        @can('create-tax')
+                                        <a href="{{route('tax-master-create')}}" class="btn btn-primary btn-sm"
+                                            role="button">Add Gst</a>
+                                        @endcan
+                                        @can('export-tax')
                                         <a href="{{route('gst.export')}}" class="btn btn-info btn-sm"
-
-                                        role="button">Export</a>
-                                        </span>
+                                            role="button">Export</a>
+                                        @endcan
+                                    </span>
                                 </div>
-                               
+
                                 <br>
                             </div>
 
@@ -100,7 +102,7 @@
                         <table class="table align-middle table-row-dashed fs-7 gy-5" id="tableYajra">
                             <thead>
                                 <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
-                                <th id="th">SR NO</th>
+                                    <th id="th">SR NO</th>
                                     <th id="th">SGST</th>
                                     <th id="th">CGST</th>
                                     <th id="th">IGST</th>
@@ -117,16 +119,15 @@
     </div>
     <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
     </div>
-
     <body>
-        
-          <script>
-        $(document).ready(function() {
-            var table = $('#tableYajra').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('tax-master-show') }}",
-                columns: [{
+
+        <script>
+            $(document).ready(function () {
+                var table = $('#tableYajra').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ route('tax-master-show') }}",
+                    columns: [{
                         data: 'id',
                         name: 'id'
                     },
@@ -149,36 +150,38 @@
                         searchable: true,
 
                     }
-                ],
-                order: [
-                  [0, 'desc'] 
-                 ],
-                rowCallback: function(row, data, index) {
-                    var api = this.api();
-                    var startIndex = api.page() * api.page.len();
-                    var rowNum = startIndex + index + 1;
-                    $(row).find('td:eq(0)').html(rowNum);
-                }
-            });
+                    ],
+                    order: [
+                        [0, 'desc']
+                    ],
+                    rowCallback: function (row, data, index) {
+                        var api = this.api();
+                        var startIndex = api.page() * api.page.len();
+                        var rowNum = startIndex + index + 1;
+                        $(row).find('td:eq(0)').html(rowNum);
+                    }
+                });
 
-            setTimeout(function() {
-                $("div.alert-success").remove();
-            }, 3000);
-        });
+                setTimeout(function () {
+                    $("div.alert-success").remove();
+                }, 3000);
+            });
         </script>
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
         <script>
-        $(document).ready(function() {
-            console.log("ready!");
-        });
+            $(document).ready(function () {
+                console.log("ready!");
+            });
         </script>
 
 
 
     </body>
+
+    @endcan
 
     </html>
     @endsection

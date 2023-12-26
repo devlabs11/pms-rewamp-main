@@ -1,7 +1,7 @@
 
 
 @extends('admin.common.main')
-
+@section('title', 'Roles | DIPLERP')
 @section('containes')
 
 

@@ -1,5 +1,5 @@
 @extends('admin.common.main')
-
+@section('title', 'Permissions | DIPLERP')
 @section('containes')
 
 
