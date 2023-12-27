@@ -80,17 +80,15 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 
     // send menus to the add permissions
     Route::get('/addPermission', [App\Http\Controllers\PermissionController::class, 'sendMenu']);
+    Route::get('/showroles_and_permission', [RolesAndPermissionController::class, 'showRP'])->name('showroles_and_permission');
+    Route::post('/showroles_and_permission', [RolesAndPermissionController::class, 'storeRolesAndPermission'])->name('showroles_and_permissions');
+    Route::get('/fetchPermission', [PermissionController::class, 'fetchPermission'])->name('fetchPermission');
+    Route::get('test', 'App\Http\Controllers\HomeController@test');
 
     // getting submenus according to menus
     Route::get('/get-submenus/{menu_id}', [App\Http\Controllers\PermissionController::class, 'getSubmenus'])->name('get.submenus');
 
-
-    Route::get('/showroles_and_permission', [RolesAndPermissionController::class, 'showRP'])->name('showroles_and_permission');
-    Route::post('/showroles_and_permission', [RolesAndPermissionController::class, 'storeRolesAndPermission'])->name('showroles_and_permissions');
-
-    Route::get('/fetchPermission', [PermissionController::class, 'fetchPermission'])->name('fetchPermission');
-
-    // ......................................................Tax Structure Master.............................................................................//
+    // ............Tax Structure Master.............................................................................//
     Route::get('/tax-structure-master-create', function () {
         return view('admin.tax-structure.tax-structure-master-create');
     });
