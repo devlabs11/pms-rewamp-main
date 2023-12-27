@@ -1,5 +1,5 @@
 @extends('admin.common.main')
-
+@section('title', 'Role Has Permissions | DIPLERP')
 @section('containes')
 
 
@@ -127,14 +127,13 @@
                                     <div style="float:right;">
 
                                         <div class="d-flex justify-content-end">
-                                            <a href="/showroles_and_permission" class="btn btn-outline-danger"
+                                            <a href="/showroles_and_permission" class="btn btn-outline-danger btn-sm"
                                                 style="margin-right:10px;">Cancel</a>
                                             <button type="submit" id="submit" data-kt-contacts-type="submit"
-                                                class="btn btn-primary">
+                                                class="btn btn-primary btn-sm">
                                                 <span class="indicator-label">Save</span>
                                             </button>
                                         </div>
-
                                     </div>
                                 </form>
                             </div>

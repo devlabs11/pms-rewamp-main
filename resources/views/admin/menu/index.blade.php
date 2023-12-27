@@ -1,4 +1,5 @@
 @extends('admin.common.main')
+@section('title', 'Menu Master | DIPLERP')
 @section('containes')
 <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 </div>

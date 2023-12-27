@@ -34,7 +34,7 @@ class RolesAndPermissionController extends Controller
             $permission = Permission::findOrFail($permissionId);
             $role->givePermissionTo($permission);
         }
-        return redirect('/showroles_and_permission');
+        return redirect('/showroles_and_permission')->with('message', 'Permissions assigned successfully.');
     }
 
     public function showRP(Request $request)

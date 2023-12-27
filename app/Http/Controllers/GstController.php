@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Gate;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\GstModel;
@@ -58,9 +58,22 @@ class GstController extends Controller
                         $editUrl = route('edit-tax-master', ['id' => $encryptedId]);
                         $deleteUrl = route('delete-tax-master', ['id' =>$encryptedId]);
                        
-                     $actionBtn = '<a href="' . $editUrl . '" title="Edit" class="menu-link flex-stack px-3" style="font-weight:normal !important;"><i class="fa fa-edit" id="ths" style="font-weight:normal !important;"></i></a>
-                     <a  href="' . $deleteUrl . '" title="Delete"   style="cursor: pointer;font-weight:normal !important;" class="menu-link flex-stack px-3"><i class="fa fa-trash" style="color:red"></i></a>';
-                     return $actionBtn;
+                        $editBtn = '';
+                        $deleteBtn = '';
+    
+                       
+                        if (Gate::allows('edit-gst')) {
+                            $editBtn = '<a href="' . $editUrl . '" title="Edit" class="menu-link flex-stack px-3" style="font-weight:normal !important;"><i class="fa fa-edit" id="ths" style="font-weight:normal !important;"></i></a>';
+                        }
+    
+                       
+                        if (Gate::allows('delete-gst')) {
+                            $deleteBtn = '<a href="' . $deleteUrl . '" title="Delete" style="cursor: pointer;font-weight:normal !important;" class="menu-link flex-stack px-3"><i class="fa fa-trash" style="color:red"></i></a>';
+                        }
+    
+                       
+                        $actionBtn = $editBtn . $deleteBtn;
+                        return $actionBtn;
                     })
                     ->rawColumns(['action'])
                     

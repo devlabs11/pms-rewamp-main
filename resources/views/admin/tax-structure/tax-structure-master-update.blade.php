@@ -1,5 +1,5 @@
 @extends('admin.common.main')
-@section('title', 'Tax Master | DIPLERP')
+@section('title', 'Tax Structure Master | DIPLERP')
 @section('containes')
 
 
@@ -54,7 +54,7 @@
                     <div class="card-title">
                         <div class="d-flex align-items-center position-relative my-1">
                             &nbsp;
-                            Add Gst
+                            Edit Tax Structure
                         </div>
                     </div>
                 </div>
@@ -67,85 +67,63 @@
 
                                 <div style="display:none" class="card-title">
 
-                                    <h2>Add GST</h2>
+                                    <h2>Edit Tax Structure</h2>
                                 </div>
                             </div>
-
                             <div class="card-body pt-5">
-                                <form method="POST" id="form" action="{{ route('tax-master-create') }}">
+                                <form method="POST" id="form"
+                                action="{{ route('update-structure-tax-master',encrypt($editTaxStructure->id)) }}">
                                     @csrf
-
                                     <div class="row row-cols-1 row-cols-sm-3 rol-cols-md-1 row-cols-lg-3">
-                                        <div class="col">
+                                        <div class="col-xl-6">
                                             <div class="fv-row mb-2">
                                                 <label class="fs-6 fw-bold form-label mt-3">
-                                                    <span class="">SGST</span><span style="color:red;">*</span>
+                                                    <span class="">Tax Structure Name</span><span
+                                                        style="color:red;">*</span>
                                                 </label>
-                                                <input type="text" name="sgst" id="sgst"
-                                                    class="form-control form-control-solid" value="{{old('sgst')}}"
-                                                    autocomplete="off" style="border: 1px solid black; padding: 13px;"
-                                                    oninput="removeBorderStyle(this)">
-
-                                                <span id="sgstError" style="color:red;"></span>
-
-                                                @error('sgst')
-                                                <div id="Errormsg">{{ $message }}</div>
-                                                @enderror
-
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="fv-row mb-2">
-                                                <label class="fs-6 fw-bold form-label mt-3">
-                                                    <span class="">CGST</span><span style="color:red;">*</span>
-                                                </label>
-                                                <input type="text" name="cgst" id="cgst"
-                                                    class="form-control form-control-solid" value="{{old('cgst')}}"
-                                                    autocomplete="off" style="border: 1px solid black; padding: 13px;"
-                                                    oninput="removeBorderStyle(this)">
-                                                <span id="cgstError" style="color:red;"></span>
-                                                @error('cgst')
-                                                <div id="Errormsg">{{ $message }}</div>
-                                                @enderror
-
-
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="fv-row mb-2">
-                                                <label class="fs-6 fw-bold form-label mt-3">
-                                                    <span class="">IGST</span><span style="color:red;">*</span>
-                                                </label>
-                                                <input type="text" name="igst" id="igst"
-                                                    class="form-control form-control-solid" aria-required="true"
-                                                    aria-invalid="true" value="{{old('igst')}}" autocomplete="off"
+                                                <input type="text" name="tax_structure_name" id="tax_structure_name"
+                                                    class="form-control form-control-solid"
+                                                    value="{{$editTaxStructure->tax_structure_name}}" autocomplete="off"
                                                     style="border: 1px solid black; padding: 13px;"
                                                     oninput="removeBorderStyle(this)">
-                                                <span id="igstError" style="color:red;"></span>
-                                                @error('igst')
+                                                <span id="taxStructureNameError" style="color:red;"></span>
+                                                @error('tax_structure_name')
+                                                <div id="Errormsg">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6">
+                                            <div class="fv-row mb-2">
+                                                <label class="fs-6 fw-bold form-label mt-3">
+                                                    <span class="">Select Tax</span><span style="color: red;">*</span>
+                                                </label>
+                                                <select name="tax" id="tax" class="form-control form-control-solid"
+                                                    style="border: 1px solid black; padding-top: 0px; padding-bottom: 0px;">
+                                                    <option value="">select</option>
+                                                    <option value="1"
+                                                        {{ $editTaxStructure->tax == 1 ? 'selected' : '' }}>{{$editTaxStructure->tax}}</option>
+                                                    <option value="2"
+                                                        {{ $editTaxStructure->tax == 2 ? 'selected' : '' }}>{{$editTaxStructure->tax}}</option>
+                                                </select>
+                                                <span id="taxError" style="color:red;"></span>
+                                                @error('tax')
                                                 <div id="Errormsg">{{ $message }}</div>
                                                 @enderror
 
-
                                             </div>
                                         </div>
-
                                     </div>
                                     <br>
                                     <div style="float:right;">
-
                                         <div class="d-flex justify-content-end">
-
-                                            <a href="{{route('tax-master-show')}}" class="btn btn-outline-danger btn-sm"
+                                            <a href="{{route('tax-structure-master-show')}}"
+                                                class="btn btn-outline-danger btn-sm"
                                                 style="margin-right:10px;">Cancel</a>
                                             <button type="submit" id="submit" data-kt-contacts-type="submit"
                                                 class="btn btn-primary btn-sm">
                                                 <span class="indicator-label">Save</span>
-
-
                                             </button>
                                         </div>
-
                                     </div>
                                 </form>
                             </div>
@@ -155,14 +133,11 @@
             </div>
         </div>
     </div>
-
     </div>
     </div>
     </div>
     </div>
     </div>
-
-
     <style>
     #sgst-error {
         color: red;
@@ -178,56 +153,50 @@
     </style>
 
 
-
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         var form = document.getElementById('form');
-        var sgstInput = document.getElementById('sgst');
-        var cgstInput = document.getElementById('cgst');
-        var igstInput = document.getElementById('igst');
+        var taxStructureNameInput = document.getElementById('tax_structure_name');
+        var taxInput = document.getElementById('tax');
 
-        var sgstError = document.getElementById('sgstError');
-        var cgstError = document.getElementById('cgstError');
-        var igstError = document.getElementById('igstError');
+        var taxStructureNameError = document.getElementById('taxStructureNameError');
+        var taxError = document.getElementById('taxError');
 
         form.addEventListener('submit', function(event) {
-            if (!isValidNumeric(sgstInput.value.trim())) {
-                sgstError.textContent = 'SGST must be a valid numeric value.';
-                event.preventDefault();
+            var isValid = true;
+
+            // Validate Tax Structure Name
+            if (!isValidText(taxStructureNameInput.value.trim())) {
+                taxStructureNameError.textContent = 'Tax Structure Name is required.';
+                isValid = false;
             } else {
-                sgstError.textContent = '';
+                taxStructureNameError.textContent = '';
             }
 
-            if (!isValidNumeric(cgstInput.value.trim())) {
-                cgstError.textContent = 'CGST must be a valid numeric value.';
-                event.preventDefault();
+            // Validate Tax
+            if (taxInput.value.trim() === '') {
+                taxError.textContent = 'Please select a Tax.';
+                isValid = false;
             } else {
-                cgstError.textContent = '';
+                taxError.textContent = '';
             }
 
-            if (!isValidNumeric(igstInput.value.trim())) {
-                igstError.textContent = 'IGST must be a valid numeric value.';
+            if (!isValid) {
                 event.preventDefault();
-            } else {
-                igstError.textContent = '';
             }
         });
 
-        // Add input event listeners to clear errors when the user types
-        sgstInput.addEventListener('input', function() {
-            sgstError.textContent = '';
+
+        taxStructureNameInput.addEventListener('input', function() {
+            taxStructureNameError.textContent = '';
         });
 
-        cgstInput.addEventListener('input', function() {
-            cgstError.textContent = '';
+        taxInput.addEventListener('change', function() {
+            taxError.textContent = '';
         });
 
-        igstInput.addEventListener('input', function() {
-            igstError.textContent = '';
-        });
-
-        function isValidNumeric(value) {
-            return /^-?\d*\.?\d+$/.test(value);
+        function isValidText(value) {
+            return value !== '';
         }
     });
 
@@ -241,6 +210,7 @@
         }
     }
     </script>
+
 
 
     @endsection

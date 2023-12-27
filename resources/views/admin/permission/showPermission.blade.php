@@ -1,4 +1,5 @@
 @extends('admin.common.main')
+@section('title', 'Permissions | DIPLERP')
 @section('containes')
 <div class="d-flex align-items-center ms-1 ms-lg-3" id="kt_header_user_menu_toggle">
 </div>
@@ -132,9 +133,7 @@
 
                     }
                 ],
-                order: [
-                  [0, 'desc'] 
-                 ],
+                
                 rowCallback: function(row, data, index) {
                     var api = this.api();
                     var startIndex = api.page() * api.page.len();
