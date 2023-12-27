@@ -130,11 +130,19 @@
                         data: 'status',
                         name: 'status',
                         render: function(data, type, full, meta) {
-                            var iconClass = data === 'Active' ?
-                                'fas fa-check-circle text-success toggle-status-icon' :
-                                'fas fa-times-circle text-danger toggle-status-icon';
-                            return '<i class="' + iconClass + '" data-id="' + full.id +
-                                '"></i>';
+                            var statusText = data === 'Active' ? 'Active' : 'Inactive';
+                            var statusClass = data === 'Active' ? 'text-success' :
+                            'text-danger';
+                            var iconClass = data === 'Active' ? 'fas fa-check-circle' :
+                                'fas fa-times-circle';
+
+                            return '<div class="status-container d-flex align-items-center">' +
+                                '<i class="' + iconClass + ' ' + statusClass +
+                                ' toggle-status-icon" data-id="' + full.id + '"></i>' +
+                                '<span class="mx-2 ' + statusClass +
+                                ' toggle-status-text" data-id="' + full.id + '">' + statusText +
+                                '</span>' +
+                                '</div>';
                         }
                     },
                     {
@@ -152,10 +160,11 @@
                 }
             });
 
-           
+
+            
             $(document).on('click', '.toggle-status-icon', function() {
                 var id = $(this).data('id');
-                var icon = $(this);
+                var element = $(this);
 
                 $.ajax({
                     url: "{{ route('update-status') }}",
@@ -165,18 +174,18 @@
                         _token: '{{ csrf_token() }}',
                     },
                     success: function(response) {
-                       
-                        icon.removeClass(
-                            'fa-check-circle fa-times-circle text-success text-danger');
-                        icon.addClass(response.status === 'Active' ?
-                            'fa-check-circle text-success' :
-                            'fa-times-circle text-danger');
+                        // Toggle the icon and text based on the response
+                        element.toggleClass('fa-check-circle fa-times-circle');
+                        element.toggleClass('text-success text-danger');
+                        element.siblings('.toggle-status-text').text(response.status ===
+                            'Active' ? 'Active' : 'Inactive');
                     },
                     error: function(xhr) {
                         console.error(xhr.responseText);
                     }
                 });
             });
+
 
 
             setTimeout(function() {
