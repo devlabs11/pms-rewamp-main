@@ -132,7 +132,7 @@
                         render: function(data, type, full, meta) {
                             var statusText = data === 'Active' ? 'Active' : 'Inactive';
                             var statusClass = data === 'Active' ? 'text-success' :
-                            'text-danger';
+                                'text-danger';
                             var iconClass = data === 'Active' ? 'fas fa-check-circle' :
                                 'fas fa-times-circle';
 
@@ -161,8 +161,8 @@
             });
 
 
-            
-            $(document).on('click', '.toggle-status-icon', function() {
+
+            $('#tableYajra').on('click', '.toggle-status-icon', function() {
                 var id = $(this).data('id');
                 var element = $(this);
 
@@ -177,8 +177,12 @@
                         // Toggle the icon and text based on the response
                         element.toggleClass('fa-check-circle fa-times-circle');
                         element.toggleClass('text-success text-danger');
-                        element.siblings('.toggle-status-text').text(response.status ===
-                            'Active' ? 'Active' : 'Inactive');
+
+                        // Update the name cell text and color immediately
+                        var nameCell = element.closest('tr').find('.toggle-status-text');
+                        nameCell.text(response.status === 'Active' ? 'Active' : 'Inactive');
+                        nameCell.removeClass('text-success text-danger').addClass(response
+                            .status === 'Active' ? 'text-success' : 'text-danger');
                     },
                     error: function(xhr) {
                         console.error(xhr.responseText);
@@ -186,16 +190,11 @@
                 });
             });
 
-
-
             setTimeout(function() {
                 $("div.alert-success").remove();
             }, 3000);
         });
         </script>
-
-
-
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
