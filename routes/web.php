@@ -83,6 +83,6 @@ Route::get('/showroles_and_permission', [RolesAndPermissionController::class, 's
 Route::post('/showroles_and_permission', [RolesAndPermissionController::class, 'storeRolesAndPermission'])->name('showroles_and_permissions');
 
 Route::get('/fetchPermission', [PermissionController::class, 'fetchPermission'])->name('fetchPermission');
-
+Route::get('test', 'App\Http\Controllers\HomeController@test');
 
 ?>
